@@ -1,0 +1,27 @@
+@charset "UTF-8";
+.menu{
+	padding-bottom:15px;
+}
+
+.list-group{
+	text-align:center;
+	margin:0 0 1em;
+	padding-left: 20px;
+}
+
+.img-thumbnail{
+	witdh:200px;
+	height:200px;
+}
+
+.ranking{
+	height:200px;
+}
+
+h3{
+	border-bottom: solid 1px;
+}
+
+form {
+  margin: 0 auto;
+}

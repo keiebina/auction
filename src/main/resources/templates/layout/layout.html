@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4/3.0.4.RELEASE">
+
+<head>
+<meta charset="UTF-8"></meta>
+
+<!-- Bootstrapの設定 -->
+<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<!-- CSSの読込 -->
+<link th:href="@{/css/style.css}" rel="stylesheet">
+
+<title>auction</title>
+</head>
+<body>
+	<!-- ===== ヘッダー（ナビゲーションバー） =====  -->
+	<nav class="navbar navbar-inverse fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" th:href="@{/}">オークションシステム</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="#">商品登録（管理者のみ）</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a th:href="@{/userNew}"><span
+						class="glyphicon glyphicon-user"></span>新規登録</a></li>
+				<li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span>ログイン</a></li>
+			</ul>
+		</div>
+	</nav>
+	<!-- 検索フォーム、リンクボタン -->
+	<div class="container-fluid menu">
+				<div class="row">
+					<form class="form-inline">
+						<div class="col-lg-5">
+							<input class="form-control " type="search" placeholder="Search"
+								aria-label="Search">
+						</div>
+						<button class="btn btn-outline-success col-lg-1" type="submit">Search</button>
+					</form>
+					<a class="btn btn-link col-lg-2" href="#">マイページ</a> <a
+						class="btn btn-link col-lg-2" href="#">ウォッチリスト</a> <a
+						class="btn btn-link col-lg-2" href="#">落札済みリスト</a>
+				</div>
+			</div>
+
+	<!-- ===== サイドバー ===== -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="list-group  col-md-2 col-lg-2 sidebar">
+				<h3>カテゴリ</h3>
+				<a th:href="@{/#}" class="list-group-item">コンピュータ</a> <a
+					th:href="@{/#}" class="list-group-item">家電、AV｜カメラ</a> <a
+					th:href="@{/#}" class="list-group-item">音楽｜CD</a> <a
+					th:href="@{/#}" class="list-group-item">本、雑誌｜漫画</a> <a
+					th:href="@{/#}" class="list-group-item">映画、ビデオ｜DVD</a> <a
+					th:href="@{/#}" class="list-group-item">おもちゃ｜ゲーム</a> <a
+					th:href="@{/#}" class="list-group-item">ホビー｜カルチャー</a> <a
+					th:href="@{/#}" class="list-group-item">アンティーク、コレクション</a> <a
+					th:href="@{/#}" class="list-group-item">スポーツ、レジャー</a> <a
+					th:href="@{/#}" class="list-group-item">ファッション｜ブランド別</a> <a
+					th:href="@{/#}" class="list-group-item">アクセサリー｜時計</a> <a
+					th:href="@{/#}" class="list-group-item">住まい、インテリア｜DIY</a> <a
+					th:href="@{/#}" class="list-group-item">事務、店舗用品</a>
+			</div>
+
+
+			<!-- ===== コンテンツ ===== -->
+			<div class="container-fluid">
+				<div class="row">
+					<!-- コンテンツ部分の挿入 -->
+					<div th:include="__${contents}__"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

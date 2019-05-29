@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	
+	<!-- Bootstrapの設定 -->
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+		rel="stylesheet"></link>
+	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<!-- CSSの読込 -->
+	<link th:href="@{/css/style.css}" rel="stylesheet">
+	
+	<!-- javascriptの読み込み（郵便番号から住所取得の為 -->
+	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+	
+	<title>auction</title>
+</head>
+<body>
+	 <div class="col-md-9"  >
+            <div class="page-header" >
+            <h1>会員登録</h1>
+            </div>
+
+            <form class="form-horizontal" method="post" th:action="@{/userCreate}" th:object="${user}" >
+
+                <!-- userId -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('userId')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">ユーザーID</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="userId" class="form-control" placeholder="メールアドレスを入力してください" th:field="*{userId}"> 
+                        <span class="text-danger" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">userId error</span>
+                    </div>
+                </div>
+                
+                <!-- password -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">パスワード</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="password" class="form-control" th:field="*{password}"> 
+                        <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">userId error</span>
+                    </div>
+                </div>
+                
+                <!-- nickname -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('nickname')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">ニックネーム</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="nickname" class="form-control" placeholder="ニックネームは公開されます" th:field="*{nickname}"> 
+                        <span class="text-danger" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">userId error</span>
+                    </div>
+                </div>
+                
+                <!-- userName -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('userName')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">氏名</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="userName" class="form-control" placeholder="氏名は公開されません" th:field="*{userName}"> 
+                        <span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">userId error</span>
+                    </div>
+                </div>
+                
+                <!-- birthday -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('birthday')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">生年月日</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="birthday" class="form-control" placeholder="yyyy/MM/dd" th:field="*{birthday}"> 
+                        <span class="text-danger" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">userId error</span>
+                    </div>
+                </div>
+
+                <!-- gender -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('gender')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">性別</label>
+                    <div class="col-md-5">
+                    	<div class="form-group">
+                    		<div th:each="item : ${radioGender}">
+                    			<input type="radio" name="radioGender" th:text="${item.key}" th:value="${item.value}" th:field="*{gender}">
+                    			<span class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">userId error</span>
+                    		</div>
+                    	</div>
+                    </div>
+                </div>
+
+				<!-- ▼郵便番号入力フィールド(7桁) -->
+				<div class="form-group" th:classappend="${#fields.hasErrors('postalCode')} ? 'has-error' ">
+					<label class="col-md-2 control-label">郵便番号</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" name="postalCode" size="10" maxlength="7" placeholder="ハイフンは必要ありません" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
+						<span class="text-danger" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}">userId error</span>
+					</div>
+				</div>
+				<!-- ▼住所入力フィールド(都道府県+以降の住所) -->
+				<div class="form-group" th:classappend="${#fields.hasErrors('address')} ? 'has-error' ">
+					<label class="col-md-2 control-label">住所</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" name="address" size="60">
+						<span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">userId error</span>
+					</div>
+				</div>
+				
+				<!--                 select -->
+<!--                 <div class="form-group"> -->
+<!--                     <label class="col-md-2 control-label">性別</label> -->
+<!--                     <div class="col-md-5"> -->
+<!--                         <select name="gender" class="form-control"> -->
+<!--                             <option value="男性">男性</option> -->
+<!--                             <option value="女性">女性</option> -->
+<!--                         </select> -->
+<!--                     </div> -->
+<!--                 </div> -->
+
+                <!-- 送信ボタン -->
+                <div class="col-md-offset-2">
+                    <button type="submit" class="btn btn-primary">送信する</button>
+                </div>
+                
+            </form>
+        </div>
+</body>
+</html>
