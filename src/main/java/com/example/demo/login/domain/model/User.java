@@ -69,4 +69,7 @@ public class User {
 	@Column
 	@NotBlank(groups = ValidGroup1.class)
 	private String address;                      //住所
+	
+	@Column
+	private String role;                         //管理者権限（ROLE_GENERAL　or ROLE_ADMIN)
 }

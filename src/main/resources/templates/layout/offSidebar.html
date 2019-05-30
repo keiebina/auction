@@ -43,30 +43,10 @@
 						</div>
 						<button class="btn btn-outline-success col-lg-1" type="submit">Search</button>
 					</form>
-					<a class="btn btn-link col-lg-2" th:href="@{/userShow}">マイページ</a> <a
+					<a class="btn btn-link col-lg-2" href="#">マイページ</a> <a
 						class="btn btn-link col-lg-2" href="#">ウォッチリスト</a> <a
 						class="btn btn-link col-lg-2" href="#">落札済みリスト</a>
 				</div>
-			</div>
-
-	<!-- ===== サイドバー ===== -->
-	<div class="container-fluid">
-		<div class="row">
-			<div class="list-group  col-md-2 col-lg-2 sidebar">
-				<h3>カテゴリ</h3>
-				<a th:href="@{/#}" class="list-group-item">コンピュータ</a> <a
-					th:href="@{/#}" class="list-group-item">家電、AV｜カメラ</a> <a
-					th:href="@{/#}" class="list-group-item">音楽｜CD</a> <a
-					th:href="@{/#}" class="list-group-item">本、雑誌｜漫画</a> <a
-					th:href="@{/#}" class="list-group-item">映画、ビデオ｜DVD</a> <a
-					th:href="@{/#}" class="list-group-item">おもちゃ｜ゲーム</a> <a
-					th:href="@{/#}" class="list-group-item">ホビー｜カルチャー</a> <a
-					th:href="@{/#}" class="list-group-item">アンティーク、コレクション</a> <a
-					th:href="@{/#}" class="list-group-item">スポーツ、レジャー</a> <a
-					th:href="@{/#}" class="list-group-item">ファッション｜ブランド別</a> <a
-					th:href="@{/#}" class="list-group-item">アクセサリー｜時計</a> <a
-					th:href="@{/#}" class="list-group-item">住まい、インテリア｜DIY</a> <a
-					th:href="@{/#}" class="list-group-item">事務、店舗用品</a>
 			</div>
 
 
@@ -77,7 +57,5 @@
 					<div th:include="__${contents}__"></div>
 				</div>
 			</div>
-		</div>
-	</div>
 </body>
 </html>
