@@ -19,16 +19,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Table(name = "users")
-@NamedQueries({
-	@NamedQuery(
-			name = "getAllUsers",
-			query = "SELECT u FROM User AS u"
-			),
-	@NamedQuery(
-			name = "getAllUsersCount",
-			query = "SELECT COUNT(u) FROM User AS u"
-			)
-})
+//@NamedQueries({
+//	@NamedQuery(
+//			name = "getAllUsers",
+//			query = "SELECT u FROM Users AS u"
+//			),
+//	@NamedQuery(
+//			name = "getAllUsersCount",
+//			query = "SELECT COUNT(u) FROM Users AS u"
+//			),
+//	@NamedQuery(
+//			name = "getUserByUserId",
+//			query = "SELECT u FROM Users AS u WHERE u.userId = :userId"
+//			)
+//})
 @Entity
 @Data
 public class User {
@@ -41,8 +45,8 @@ public class User {
 	
 	@Column
 	@NotBlank(groups = ValidGroup1.class)
-	@Length(min = 4, max = 100, groups = ValidGroup2.class)
-	@Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class)
+	@Length(groups = ValidGroup2.class, min = 4, max = 100)
+	@Pattern(groups = ValidGroup3.class, regexp = "^[a-zA-Z0-9]+$")
 	private String password;                     //パスワード
 	
 	@Column

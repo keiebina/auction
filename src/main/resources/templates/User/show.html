@@ -11,41 +11,41 @@
 						<h3>登録情報</h3>
 						<div class="row">
 							<div class="col-lg-6">
-								<table class="table table-bordered">
+								<table class="table table-bordered" th:object="${loginUser}">
 									<tr>
 										<th class="col-lg-4 active">ユーザーID</th>
 										<td>
-											<p>テスト</p>
+											<p th:text="*{userId}"></p>
 										</td>
 									</tr>
 									<tr>
 										<th class="active">ニックネーム</th>
 										<td>
-											<p>テスト</p>
+											<p th:text="*{nickname}"></p>
 										</td>
 									</tr>
 									<tr>
 										<th class="active">氏名</th>
 										<td>
-											<p>テスト</p>
+											<p th:text="*{userName}"></p>
 										</td>
 									</tr>
 									<tr>
 										<th class="active">生年月日</th>
 										<td>
-											<p>テスト</p>
+											<p th:text="*{birthday}"></p>
 										</td>
 									</tr>
 									<tr>
 										<th class="active">郵便番号</th>
 										<td>
-											<p>テスト</p>
+											<p th:text="*{postalCode}"></p>
 										</td>
 									</tr>
 									<tr>
 										<th class="active">住所</th>
 										<td>
-											<p>テスト</p>
+											<p th:text="*{address}"></p>
 										</td>
 									</tr>
 								</table>
