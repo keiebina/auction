@@ -2,7 +2,6 @@ package com.example.demo.login.controller;
 
 import java.security.Principal;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -118,20 +117,40 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/userEdit", method = RequestMethod.GET)
-	public ModelAndView getUserEdit(ModelAndView mav) {
-		mav.setViewName("layout/topLayout");
+	public ModelAndView getUserEdit(ModelAndView mav, Principal principal) {
+		String userId = principal.getName();
+		User loginUser = repository.findByUserId(userId);
+		mav.addObject("loginUser", loginUser);
+		mav.addObject("userId", userId);
+		mav.addObject("in", true);
+		mav.setViewName("layout/layout");
+		mav.addObject("contents", "user/edit :: edit_contents");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/userUpdate", method = RequestMethod.POST)
-	public ModelAndView postUserUpdate(ModelAndView mav) {
-		mav.setViewName("layout/topLayout");
-		return mav;
+	@Transactional(readOnly = false)
+	public ModelAndView postUserUpdate(@ModelAttribute @Validated(GroupOrder.class)User user, BindingResult bindingResult,Principal principal, ModelAndView mav) {
+		if (bindingResult.hasErrors()) {
+			//エラーがある場合の処理
+			System.out.println("エラーがあります");
+			return getUserEdit(mav, principal);
+		}
+		String userId = principal.getName();
+		String password = user.getPassword();
+		if (userService.passwordCheck(userId, password) == false) {
+			System.out.println("パスワードが一致しません");
+			return getUserEdit(mav, principal);
+		}
+		password = passwordEncoder.encode(password);
+		user.setPassword(password);
+		repository.saveAndFlush(user);
+		return new ModelAndView("redirect:/userShow");
 	}
 	
 	@RequestMapping(value = "/userDestroy", method = RequestMethod.POST)
 	public ModelAndView postUserDestroy(ModelAndView mav) {
-		mav.setViewName("layout/topLayout");
+		mav.setViewName("layout/layout");
 		return mav;
 	}
 
