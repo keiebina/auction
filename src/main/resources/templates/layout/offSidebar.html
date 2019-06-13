@@ -24,25 +24,13 @@
 				<a class="navbar-brand" th:href="@{/}">オークションシステム</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a href="#">ようこそ、[[${userId}]]さん</a></li>
-				<li><a th:href="@{/newProduct}">商品登録（管理者のみ）</a></li>
+				<li><a href="#">商品登録（管理者のみ）</a></li>
 			</ul>
-			<!-- ログインしていない場合の表示 -->
-			<ul th:if="${in} == false" class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav navbar-right">
 				<li><a th:href="@{/userNew}"><span
 						class="glyphicon glyphicon-user"></span>新規登録</a></li>
 				<li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span>ログイン</a></li>
 			</ul>
-			<!-- ログインしている場合の表示 -->
-			<div th:if="${in} == true" class="collapse navbar-collapse" id="navbarSupportedContent">
-				<form method="post" th:action="@{/logout}">
-                	<button class="btn btn-link pull-right navbar-brand" type="submit">ログアウト</button>
-            	</form>
-			</div>
-<!-- 			<ul th:if="in" class="nav navbar-nav navbar-right"> -->
-<!-- 				<li>ようこそ、[[${userId}]]さん</li> -->
-<!-- 				<li><a th:href="@{/logout}">ログアウト</a></li> -->
-<!-- 			</ul> -->
 		</div>
 	</nav>
 	<!-- 検索フォーム、リンクボタン -->
@@ -51,23 +39,13 @@
 					<form class="form-inline">
 						<div class="col-lg-5">
 							<input class="form-control " type="search" placeholder="Search"
-								aria-label="Search" style="width:100%">
+								aria-label="Search">
 						</div>
 						<button class="btn btn-outline-success col-lg-1" type="submit">Search</button>
 					</form>
-					<a th:if="${in} == true" class="btn btn-link col-lg-2" th:href="@{/userShow}">マイページ</a> <a
-						th:if="${in} == true" class="btn btn-link col-lg-2" href="#">ウォッチリスト</a> <a
-						th:if="${in} == true" class="btn btn-link col-lg-2" href="#">落札済みリスト</a>
-				</div>
-			</div>
-
-	<!-- ===== サイドバー ===== -->
-	<div class="container-fluid">
-		<div class="row">
-			<div class="list-group  col-md-2 col-lg-2 sidebar">
-				<h3>カテゴリ</h3>
-				<div th:each="categoryItem : ${categoryItems}">
-					<a th:href="@{/#}" class="list-group-item" th:text="${categoryItem}">カテゴリー名</a> 
+					<a class="btn btn-link col-lg-2" href="#">マイページ</a> <a
+						class="btn btn-link col-lg-2" href="#">ウォッチリスト</a> <a
+						class="btn btn-link col-lg-2" href="#">落札済みリスト</a>
 				</div>
 			</div>
 
@@ -79,7 +57,5 @@
 					<div th:include="__${contents}__"></div>
 				</div>
 			</div>
-		</div>
-	</div>
 </body>
 </html>

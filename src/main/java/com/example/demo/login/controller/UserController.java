@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.login.domain.model.GroupOrder;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.jdbc.UserRepository;
+import com.example.demo.login.domain.service.ProductService;
 import com.example.demo.login.domain.service.UserService;
 
 
@@ -47,6 +47,9 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	ProductService productService;
+	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView getLogin(ModelAndView mav) {
@@ -71,6 +74,7 @@ public class UserController {
 			mav.addObject("userId", userId);
 			mav.addObject("in", true);
 		}catch (Exception e) { }
+		mav.addObject("categoryItems", productService.getCategoryItems());
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/index :: index_contents");
 		return mav;
@@ -87,7 +91,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/userCreate", method = RequestMethod.POST)
 	@Transactional(readOnly = false)
-	public ModelAndView postUserCreate(@ModelAttribute @Validated(GroupOrder.class)User user,BindingResult bindingResult, ModelAndView mav) {
+	public ModelAndView postUserCreate(@ModelAttribute @Validated User user,BindingResult bindingResult, ModelAndView mav) {
 		if (bindingResult.hasErrors()) {
 			//エラーがある場合の処理
 			return getUserNew(user, mav);
@@ -117,7 +121,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/userEdit", method = RequestMethod.GET)
-	public ModelAndView getUserEdit(ModelAndView mav, Principal principal) {
+	public ModelAndView getUserEdit(@ModelAttribute User user, ModelAndView mav, Principal principal) {
 		String userId = principal.getName();
 		User loginUser = repository.findByUserId(userId);
 		mav.addObject("loginUser", loginUser);
@@ -130,17 +134,17 @@ public class UserController {
 	
 	@RequestMapping(value = "/userUpdate", method = RequestMethod.POST)
 	@Transactional(readOnly = false)
-	public ModelAndView postUserUpdate(@ModelAttribute @Validated(GroupOrder.class)User user, BindingResult bindingResult,Principal principal, ModelAndView mav) {
+	public ModelAndView postUserUpdate(@ModelAttribute @Validated User user, BindingResult bindingResult,Principal principal, ModelAndView mav) {
 		if (bindingResult.hasErrors()) {
 			//エラーがある場合の処理
 			System.out.println("エラーがあります");
-			return getUserEdit(mav, principal);
+			return getUserEdit(user, mav, principal);
 		}
 		String userId = principal.getName();
 		String password = user.getPassword();
-		if (userService.passwordCheck(userId, password) == false) {
+		if (userService.passwordCheck(userId, password) == false) {      //パスワードの一致チェック
 			System.out.println("パスワードが一致しません");
-			return getUserEdit(mav, principal);
+			return getUserEdit(user, mav, principal);
 		}
 		password = passwordEncoder.encode(password);
 		user.setPassword(password);

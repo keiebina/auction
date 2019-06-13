@@ -23,10 +23,10 @@ public class UserService {
 		boolean result = false;
 		String userPassword = repository.findByUserId(userId).getPassword();
 		if (passwordEncoder.matches(password, userPassword)) {
-			System.out.println("一致したよ");
+			System.out.println("一致");
 			result = true;
 		}else {
-			System.out.println("一致しなかったよ");
+			System.out.println("不一致");
 			result = false;
 		}
 		return result;

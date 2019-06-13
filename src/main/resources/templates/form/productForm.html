@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	
+	<!-- Bootstrapの設定 -->
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+		rel="stylesheet"></link>
+	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<!-- CSSの読込 -->
+	<link th:href="@{/css/style.css}" rel="stylesheet">
+	
+	<!-- javascriptの読み込み（郵便番号から住所取得の為 -->
+	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+	
+	<title>auction</title>
+</head>
+<body>
+	 <div class="col-md-9"  >
+            <div class="page-header" >
+            <h1>商品登録</h1>
+            </div>
+
+            <form class="form-horizontal" method="post" th:action="@{/productCreate}" th:object="${product}" >
+
+                <!-- productName -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('productName')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">商品名</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="productName" class="form-control" th:field="*{productName}"> 
+                        <span class="text-danger" th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}">productName error</span>
+                    </div>
+                </div>
+                
+                <!-- category -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('category')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">カテゴリ</label>
+                    <div class="col-sm-5">
+                    	<select name="category" th:field="*{category}">
+                      	  <option th:each="category : ${categoryItems}" th:text="${category}" th:value="${category}">category</option>
+                    	</select>
+                        <span class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">category error</span>
+                    </div>
+                </div>
+                
+                 <!-- state -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('state')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">商品の状態</label>
+                    <div class="col-sm-5">
+                    	<select name="state" th:field="*{state}">
+                      	  <option th:each="state : ${stateItems}" th:text="${state}" th:value="${state}">state</option>
+                    	</select>
+                        <span class="text-danger" th:if="${#fields.hasErrors('state')}" th:errors="*{state}">state error</span>
+                    </div>
+                </div>
+                
+                <!-- description -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">商品の説明</label>
+                    <div class="col-sm-5">
+                        <textarea name="description" class="form-control"  th:field="*{description}"></textarea>
+                        <span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">description error</span>
+                    </div>
+                </div>
+                
+                <!-- endTime -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('endTime')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">終了日時</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="endTime" class="form-control" th:field="*{endTime}"> 
+                        <span class="text-danger" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">endTime error</span>
+                    </div>
+                </div>
+                
+                <!--startPrice -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('startPrice')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">開始価格</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="startPrice" class="form-control" th:field="*{startPrice}"> 
+                        <span class="text-danger" th:if="${#fields.hasErrors('startPrice')}" th:errors="*{startPrice}">startTime error</span>
+                    </div>
+                </div>
+
+
+                <!-- 送信ボタン -->
+                <div class="col-md-offset-2">
+                    <button type="submit" class="btn btn-primary">送信する</button>
+                </div>
+                
+            </form>
+        </div>
+</body>
+</html>

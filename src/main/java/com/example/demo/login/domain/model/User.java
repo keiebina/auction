@@ -19,59 +19,45 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Table(name = "users")
-//@NamedQueries({
-//	@NamedQuery(
-//			name = "getAllUsers",
-//			query = "SELECT u FROM Users AS u"
-//			),
-//	@NamedQuery(
-//			name = "getAllUsersCount",
-//			query = "SELECT COUNT(u) FROM Users AS u"
-//			),
-//	@NamedQuery(
-//			name = "getUserByUserId",
-//			query = "SELECT u FROM Users AS u WHERE u.userId = :userId"
-//			)
-//})
 @Entity
 @Data
 public class User {
 	
 	@Id
 	@Column
-	@NotBlank(groups = ValidGroup1.class)
-	@Email(groups = ValidGroup2.class)
+	@NotBlank
+	@Email
 	private String userId;                       //ユーザーID（メールアドレス形式）
 	
 	@Column
-	@NotBlank(groups = ValidGroup1.class)
-	@Length(groups = ValidGroup2.class, min = 4, max = 100)
-	@Pattern(groups = ValidGroup3.class, regexp = "^[a-zA-Z0-9]+$")
+	@NotBlank
+	@Length(min = 4, max = 100)
+	@Pattern( regexp = "^[a-zA-Z0-9]+$")
 	private String password;                     //パスワード
 	
 	@Column
-	@NotBlank(groups = ValidGroup1.class)
+	@NotBlank
 	private String nickname;                     //公開されるユーザー名
 	
 	@Column
-	@NotBlank(groups = ValidGroup1.class)
+	@NotBlank
 	private String userName;                     //氏名
 	
 	@Column
-	@NotNull(groups = ValidGroup1.class)
+	@NotNull
 	private boolean gender;                      //性別
 	
 	@Column 
-	@NotNull(groups = ValidGroup1.class)
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthday;                  //生年月日
 	
 	@Column
-	@NotBlank(groups = ValidGroup1.class)
+	@NotBlank
 	private String postalCode;                  //郵便番号
 	
 	@Column
-	@NotBlank(groups = ValidGroup1.class)
+	@NotBlank
 	private String address;                      //住所
 	
 	@Column
