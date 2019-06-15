@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	<body >
+		<div th:fragment="show_contents">
+			<div class="row">
+				<div class="col-lg-4">
+					<h3>商品画像</h3>
+					<div class="productImage" style="height: 500px; background-color: gray;">
+						画像挿入エリア
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<h3>商品の説明</h3>
+				</div>
+				<div class="col-lg-4">
+					<h3>出品状況</h3>
+					<table class="table table-bordered" >
+						<tr>
+							<th class="col-lg-6">開始時刻</th>
+							<td class="col-lg-6">データベース参照</td>
+						</tr>
+						<tr>
+							<th>終了時刻</th>
+							<td>データベース参照</td>
+						</tr>
+						<tr>
+							<th>残り時間</th>
+							<td>データベース参照</td>
+						</tr>
+						<tr>
+							<th>開始価格</th>
+							<td>データベース参照</td>
+						</tr>
+						<tr>
+							<th>入札件数</th>
+							<td>データベース参照</td>
+						</tr>
+						<tr>
+							<th>入札履歴</th>
+							<td>データベース参照</td>
+						</tr>
+					</table>
+					<form method="post" th:action="@{/Action}">
+						<!-- 入札ボタン -->
+						<button class="btn btn-primary btn-lg center-block" type="submit" name="bid" style="width:80%; margin-top:20px;">入札する</button>
+						<!-- ウォッチリスト追加ボタン -->
+						<button class="btn btn-primary btn-lg center-block" type="submit" name="addWatchList" style="width:80%; margin-top:20px;">ウォッチリスストに追加する</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

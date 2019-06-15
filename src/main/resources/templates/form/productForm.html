@@ -22,7 +22,7 @@
             <h1>商品登録</h1>
             </div>
 
-            <form class="form-horizontal" method="post" th:action="@{/productCreate}" th:object="${product}" >
+            <form class="form-horizontal" method="post" th:action="@{/productCreate}" th:object="${product}" enctype="multipart/form-data" >
 
                 <!-- productName -->
                 <div class="form-group" th:classappend="${#fields.hasErrors('productName')} ? 'has-error' ">
@@ -68,7 +68,7 @@
                 <div class="form-group" th:classappend="${#fields.hasErrors('endTime')} ? 'has-error' ">
                     <label class="col-md-2 control-label">終了日時</label>
                     <div class="col-sm-5">
-                        <input type="text" name="endTime" class="form-control" th:field="*{endTime}"> 
+                        <input type="datetime-local" name="endTime" class="form-control" th:field="*{endTime}"> 
                         <span class="text-danger" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">endTime error</span>
                     </div>
                 </div>
@@ -78,7 +78,16 @@
                     <label class="col-md-2 control-label">開始価格</label>
                     <div class="col-sm-5">
                         <input type="text" name="startPrice" class="form-control" th:field="*{startPrice}"> 
-                        <span class="text-danger" th:if="${#fields.hasErrors('startPrice')}" th:errors="*{startPrice}">startTime error</span>
+                        <span class="text-danger" th:if="${#fields.hasErrors('startPrice')}" th:errors="*{startPrice}">startPrice error</span>
+                    </div>
+                </div>
+                
+                <!-- image -->
+                <div class="form-group" th:classappend="${#fields.hasErrors('imageResource')} ? 'has-error' ">
+                    <label class="col-md-2 control-label">商品画像</label>
+                    <div class="col-sm-5">
+                        <input type="file" name="imageResource" th:field="*{imageResource}"> 
+                        <span class="text-danger" th:if="${#fields.hasErrors('imageResource')}" th:errors="*{imageResource}">imageResorce error</span>
                     </div>
                 </div>
 

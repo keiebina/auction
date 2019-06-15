@@ -2,8 +2,9 @@ package com.example.demo.login.controller;
 
 import java.security.Principal;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.login.domain.model.Product;
 import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.repository.jdbc.ProductRepository;
 import com.example.demo.login.domain.repository.jdbc.UserRepository;
 import com.example.demo.login.domain.service.ProductService;
 import com.example.demo.login.domain.service.UserService;
@@ -39,7 +42,10 @@ public class UserController {
 //=======================================================================================================================
 	
 	@Autowired
-	UserRepository repository;
+	UserRepository uRepository;
+	
+	@Autowired
+	ProductRepository pRepository;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -74,6 +80,10 @@ public class UserController {
 			mav.addObject("userId", userId);
 			mav.addObject("in", true);
 		}catch (Exception e) { }
+		Integer id = 2;
+		Product product = pRepository.findByProductId(id);
+		System.out.println(product);
+		mav.addObject("product", product);
 		mav.addObject("categoryItems", productService.getCategoryItems());
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/index :: index_contents");
@@ -101,7 +111,7 @@ public class UserController {
 			//パスワードの暗号化
 			String password = passwordEncoder.encode(user.getPassword());
 			user.setPassword(password);
-			repository.saveAndFlush(user);
+			uRepository.saveAndFlush(user);
 			System.out.println("ユーザー情報の登録が完了 user:" + user);
 			return new ModelAndView("redirect:/login");
 		}
@@ -111,7 +121,7 @@ public class UserController {
 	public ModelAndView getUserShow(ModelAndView mav, Principal principal) {
 		//ログインユーザーの情報を取得、格納
 		String userId = principal.getName();
-		User loginUser = repository.findByUserId(userId);
+		User loginUser = uRepository.findByUserId(userId);
 		mav.addObject("loginUser", loginUser);
 		mav.addObject("userId", userId);
 		mav.addObject("in", true);
@@ -123,7 +133,7 @@ public class UserController {
 	@RequestMapping(value = "/userEdit", method = RequestMethod.GET)
 	public ModelAndView getUserEdit(@ModelAttribute User user, ModelAndView mav, Principal principal) {
 		String userId = principal.getName();
-		User loginUser = repository.findByUserId(userId);
+		User loginUser = uRepository.findByUserId(userId);
 		mav.addObject("loginUser", loginUser);
 		mav.addObject("userId", userId);
 		mav.addObject("in", true);
@@ -148,7 +158,7 @@ public class UserController {
 		}
 		password = passwordEncoder.encode(password);
 		user.setPassword(password);
-		repository.saveAndFlush(user);
+		uRepository.saveAndFlush(user);
 		return new ModelAndView("redirect:/userShow");
 	}
 	

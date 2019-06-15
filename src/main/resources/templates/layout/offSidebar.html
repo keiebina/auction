@@ -39,13 +39,13 @@
 					<form class="form-inline">
 						<div class="col-lg-5">
 							<input class="form-control " type="search" placeholder="Search"
-								aria-label="Search">
+								aria-label="Search" style="width:100%;">
 						</div>
 						<button class="btn btn-outline-success col-lg-1" type="submit">Search</button>
 					</form>
-					<a class="btn btn-link col-lg-2" href="#">マイページ</a> <a
-						class="btn btn-link col-lg-2" href="#">ウォッチリスト</a> <a
-						class="btn btn-link col-lg-2" href="#">落札済みリスト</a>
+					<a th:if="${in} == true" class="btn btn-link col-lg-2" th:href="@{/userShow}">マイページ</a> <a
+						th:if="${in} == true" class="btn btn-link col-lg-2" href="#">ウォッチリスト</a> <a
+						th:if="${in} == true" class="btn btn-link col-lg-2" href="#">落札済みリスト</a>
 				</div>
 			</div>
 
