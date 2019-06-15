@@ -10,49 +10,21 @@
 						<!-- 見出しt -->
 						<h3>終了間近</h3>
 						<div class="row">
-							<div class="col-lg-4">
-								<div class="thumbnail">
+							<div class="col-lg-4" th:each="product : ${products}" >
+								<div class="thumbnail" >
 									 <img th:src="${product.image}" />
 									<div class="caption">
 										<div >
 										</div>
-										<p>現在の価格</p>
+										<div th:text="'現在価格 : ' + ${product.currentPrice} + ' 円'"></div>
+										<div th:text="'終了日時 : ' + ${product.endTime}"></div>
 										<p style="margin-bottom: 0px">
 											<a th:href="@{/productShow}" class="btn btn-primary">詳細を確認する</a>
 										</p>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-4">
-								<div class="thumbnail">
-									<a href=""> <img src="http://placehold.it/150x150">
-									</a>
-									<div class="caption">
-										<p>
-											<b>商品名</b>
-										</p>
-										<p>現在の価格</p>
-										<p style="margin-bottom: 0px">
-											<a th:href="@{/productShow}" class="btn btn-primary">詳細を確認する</a>
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div class="thumbnail">
-									<a href=""> <img src="http://placehold.it/150x150">
-									</a>
-									<div class="caption">
-										<p>
-											<b>商品名</b>
-										</p>
-										<p>現在の価格</p>
-										<p style="margin-bottom: 0px">
-											<a th:href="@{/productShow}" class="btn btn-primary">詳細を確認する</a>
-										</p>
-									</div>
-								</div>
-							</div>
+							<a>もっと見る</a>
 						</div>
 						<!-- 見出し -->
 						<h3>入札数ランキング</h3>

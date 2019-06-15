@@ -1,10 +1,10 @@
 package com.example.demo.login.controller;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +21,7 @@ import com.example.demo.login.domain.model.Product;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.jdbc.ProductRepository;
 import com.example.demo.login.domain.repository.jdbc.UserRepository;
+import com.example.demo.login.domain.service.DataAccessService;
 import com.example.demo.login.domain.service.ProductService;
 import com.example.demo.login.domain.service.UserService;
 
@@ -56,6 +57,9 @@ public class UserController {
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	DataAccessService dataService;
+	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView getLogin(ModelAndView mav) {
@@ -80,10 +84,10 @@ public class UserController {
 			mav.addObject("userId", userId);
 			mav.addObject("in", true);
 		}catch (Exception e) { }
-		Integer id = 2;
-		Product product = pRepository.findByProductId(id);
-		System.out.println(product);
-		mav.addObject("product", product);
+		LocalDateTime now = LocalDateTime.now();
+		List<Product> products = dataService.getCommingSoon(now);
+		System.out.println(products);
+		mav.addObject("products", products);
 		mav.addObject("categoryItems", productService.getCategoryItems());
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/index :: index_contents");

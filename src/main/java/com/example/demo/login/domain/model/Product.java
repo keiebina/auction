@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Max;
@@ -20,8 +22,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
-@Entity
 @Table(name = "products")
+@NamedQueries({
+	@NamedQuery(
+			name = "getCommingSoon",
+			query = "SELECT p FROM Product p WHERE p.endTime > :now ORDER BY p.endTime"
+			),
+	@NamedQuery(
+			name = "findByProductId",
+			query = "SELECT p FROM Product p WHERE p.productId = :productId"
+			)
+})
+@Entity
 @Data
 public class Product {
 	
@@ -62,7 +74,10 @@ public class Product {
 	@Column(name = "start_price")
 	private Integer startPrice;               													 //オークション開始価格
 	
-	@Column(name = "image", length = 1000000)
+	@Column(name = "current_price")
+	private Integer currentPrice;															//現在価格
+	
+	@Column(name = "image", length = 10000000)
 	private String image;                    													  //画像(BASE64形式）
 	
 	@Transient                    																	//@Transientを使用するとテーブルに反映されない
