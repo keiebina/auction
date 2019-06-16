@@ -11,9 +11,6 @@
 	<!-- CSSの読込 -->
 	<link th:href="@{/css/style.css}" rel="stylesheet">
 	
-	<!-- javascriptの読み込み（郵便番号から住所取得の為 -->
-	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
-	
 	<title>auction</title>
 </head>
 <body>
@@ -22,7 +19,7 @@
             <h1>入札画面</h1>
             </div>
 
-            <form class="form-horizontal" method="post" th:action="@{/bidCreate}"  th:object="${bid}">
+            <form class="form-horizontal" method="post" th:action="@{'/bidCreate'(id = ${productId})}"  th:object="${bid}">
                 <!-- 現在価格（入力不可） -->
                 <div class="form-group">
                     <label class="col-md-2 control-label">現在価格</label>
@@ -31,11 +28,12 @@
                     </div>
                 </div>
                 <!-- 入札価格 -->
-                <div class="form-group" th:classappend="${#fields.hasErrors('bidPrice')} ? 'has-error' ">
+                <div class="form-group" th:classappend="${#fields.hasErrors('bidPrice')}  or ${message} != null ? 'has-error' " >
                     <label class="col-md-2 control-label">入札価格</label>
                     <div class="col-sm-5">
                         <input type="text" name="bidPrice" class="form-control" placeholder="入札金額を入力してください" th:field="*{bidPrice}"> 
                         <span class="text-danger" th:if="${#fields.hasErrors('bidPrice')}" th:errors="*{bidPrice}">bidPrice error</span>
+                        <span class="text-danger" th:if="${message} != null" th:text="${message}">bidPrice error</span>
                     </div>
                 </div>
                 <!-- 送信ボタン -->
@@ -44,6 +42,9 @@
                 </div>
             </form>
             
+            <div style="text-align:center;">
+           		<a th:href="@{'/productShow'(id = ${productId})} " style="display: inline-block;">商品詳細画面に戻る</a>
+            </div>
         </div>
 </body>
 </html>
