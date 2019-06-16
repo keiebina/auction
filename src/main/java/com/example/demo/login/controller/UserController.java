@@ -84,10 +84,17 @@ public class UserController {
 			mav.addObject("userId", userId);
 			mav.addObject("in", true);
 		}catch (Exception e) { }
-		LocalDateTime now = LocalDateTime.now();
-		List<Product> products = dataService.getCommingSoon(now);
-		System.out.println(products);
-		mav.addObject("products", products);
+		//終了間近商品の取得
+		boolean commingSoonSize = false;
+		try {
+			LocalDateTime now = LocalDateTime.now();
+			List<Product> products = dataService.getCommingSoon(now);
+			commingSoonSize = true;
+			mav.addObject("products", products);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		mav.addObject("commingSoonSize", commingSoonSize);
 		mav.addObject("categoryItems", productService.getCategoryItems());
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/index :: index_contents");

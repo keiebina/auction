@@ -22,24 +22,28 @@
             <h1>入札画面</h1>
             </div>
 
-            <form class="form-horizontal" method="post" th:action="@{/bid}"  th:object="${bid}">
-
-                <!-- 入札 -->
+            <form class="form-horizontal" method="post" th:action="@{/bidCreate}"  th:object="${bid}">
+                <!-- 現在価格（入力不可） -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">現在価格</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="currentPrice" class="form-control"  th:value="${currentPrice}" readonly="readonly"> 
+                    </div>
+                </div>
+                <!-- 入札価格 -->
                 <div class="form-group" th:classappend="${#fields.hasErrors('bidPrice')} ? 'has-error' ">
-                    <label class="col-md-2 control-label">ユーザーID</label>
+                    <label class="col-md-2 control-label">入札価格</label>
                     <div class="col-sm-5">
                         <input type="text" name="bidPrice" class="form-control" placeholder="入札金額を入力してください" th:field="*{bidPrice}"> 
                         <span class="text-danger" th:if="${#fields.hasErrors('bidPrice')}" th:errors="*{bidPrice}">bidPrice error</span>
                     </div>
                 </div>
-                
-
                 <!-- 送信ボタン -->
                 <div class="col-md-offset-2">
                     <button type="submit" class="btn btn-primary">入札する</button>
                 </div>
-                
             </form>
+            
         </div>
 </body>
 </html>

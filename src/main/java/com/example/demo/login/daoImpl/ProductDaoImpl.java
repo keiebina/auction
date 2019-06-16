@@ -31,10 +31,10 @@ public class ProductDaoImpl implements ProductDao<Product>{
 
 	@Override
 	public Product findByProductId(Integer productId)throws DataAccessException {
-		return (Product)entityManager
+		return (Product) entityManager
 				.createNamedQuery("findByProductId")
-				.setParameter("productId", productId)
-				.getResultList();
+				.setParameter("id", productId)
+				.getSingleResult();
 	}
 
 }

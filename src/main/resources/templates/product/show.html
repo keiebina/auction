@@ -6,48 +6,43 @@
 	</head>
 	<body >
 		<div th:fragment="show_contents">
-			<div class="row">
+			<div class="row" th:object="${product}">
 				<div class="col-lg-4">
 					<h3>商品画像</h3>
-					<div class="productImage" style="height: 500px; background-color: gray;">
-						画像挿入エリア
-					</div>
+					<img th:src="*{image}" style="width:100%; "/>
 				</div>
 				<div class="col-lg-4">
 					<h3>商品の説明</h3>
+					<div th:text="*{description}"></div>
 				</div>
 				<div class="col-lg-4">
 					<h3>出品状況</h3>
 					<table class="table table-bordered" >
 						<tr>
 							<th class="col-lg-6">開始時刻</th>
-							<td class="col-lg-6">データベース参照</td>
+							<td class="col-lg-6" th:text="*{#temporals.format(startTime, 'yyyy-MM-dd HH:mm')}"></td>
 						</tr>
 						<tr>
 							<th>終了時刻</th>
-							<td>データベース参照</td>
+							<td th:text="*{#temporals.format(endTime, 'yyyy-MM-dd HH:mm')}"></td>
 						</tr>
 						<tr>
 							<th>残り時間</th>
-							<td>データベース参照</td>
+							<td ></td>
 						</tr>
 						<tr>
-							<th>開始価格</th>
-							<td>データベース参照</td>
+							<th>現在価格</th>
+							<td th:text="*{currentPrice}"></td>
 						</tr>
 						<tr>
 							<th>入札件数</th>
-							<td>データベース参照</td>
-						</tr>
-						<tr>
-							<th>入札履歴</th>
-							<td>データベース参照</td>
+							<td></td>
 						</tr>
 					</table>
 						<!-- 入札ボタン -->
-						<a  class="btn btn-primary center-block " th:href="@{/bidNew}" style="width:80%;">入札する</a>
+						<a  class="btn btn-primary center-block " th:href="@{'/bidNew'(id=*{productId})}" style="width:80%;">入札する</a>
 						<!-- ウォッチリスト追加ボタン -->
-						<a  class="btn btn-primary center-block " th:href="@{/watchListNew}" style="width:80%; margin-top:20px;">ウォッチリストに追加する</a>
+						<a  class="btn btn-primary center-block " th:href="@{'/watchListNew'(id=*{productId})}" style="width:80%; margin-top:20px;">ウォッチリストに追加する</a>
 				</div>
 			</div>
 		</div>

@@ -2,10 +2,13 @@ package com.example.demo.login.domain.service;
 
 
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.jdbc.UserRepository;
 
 
@@ -17,6 +20,12 @@ public class UserService {
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
+//ログインユーザー情報の取得==========================================================================================
+	public User getLoginUser(Principal principal) {
+		String userId = principal.getName();
+		User loginUser = repository.findByUserId(userId);
+		return loginUser;
+	}
 	
 //パスワードの一致チェック=============================================================================================
 	public boolean passwordCheck(String userId, String password ) {

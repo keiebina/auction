@@ -14,12 +14,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.login.domain.model.Product;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.jdbc.ProductRepository;
 import com.example.demo.login.domain.repository.jdbc.UserRepository;
+import com.example.demo.login.domain.service.DataAccessService;
 import com.example.demo.login.domain.service.ProductService;
 
 @Controller
@@ -27,6 +29,9 @@ public class ProductController {
 	
 	@Autowired
 	ProductService pService;
+	
+	@Autowired
+	DataAccessService dataService;
 	
 	@Autowired
 	ProductRepository pRepository;
@@ -62,7 +67,6 @@ public class ProductController {
 				sb.append("/jpeg");
 				sb.append(";base64,");
 				sb.append(base64str);
-				System.out.println(sb.toString());
 	            product.setImage(sb.toString());
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -70,18 +74,19 @@ public class ProductController {
 			//オークション開始日時の登録
 			LocalDateTime startTime = LocalDateTime.now();
 			product.setStartTime(startTime);
+			product.setCurrentPrice(product.getStartPrice()); //現在価格に開始価格を格納
 			pRepository.saveAndFlush(product);
 			return new ModelAndView("redirect:/");
 		}
 	}
 	
 	@RequestMapping(value = "/productShow", method = RequestMethod.GET)
-	public ModelAndView getProductShow(ModelAndView mav, Principal principal) {
+	public ModelAndView getProductShow(@RequestParam("id") Integer id,ModelAndView mav, Principal principal) {
 		String userId = principal.getName();
 		User loginUser = uRepository.findByUserId(userId);
-		
 		//商品IDをデータベースから検索してそれをパラメータとして送る
-		
+		Product product = dataService.findByProductId(id);
+		mav.addObject("product", product);
 		mav.addObject("loginUser", loginUser);                  //ログインユーザー情報
 		mav.addObject("userId", userId);                           //ログインユーザーID
 		mav.addObject("in", true);                                   //ログイン状態

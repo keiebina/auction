@@ -10,21 +10,25 @@
 						<!-- 見出しt -->
 						<h3>終了間近</h3>
 						<div class="row">
-							<div class="col-lg-4" th:each="product : ${products}" >
-								<div class="thumbnail" >
-									 <img th:src="${product.image}" />
+							<div th:if="${commingSoonSize} == true" class="col-lg-4" th:each="product : ${products}" >
+								<div  class="thumbnail" >
+									 <img th:src="${product.image}" style="width:275px; height:275px;"/>
 									<div class="caption">
 										<div >
 										</div>
 										<div th:text="'現在価格 : ' + ${product.currentPrice} + ' 円'"></div>
-										<div th:text="'終了日時 : ' + ${product.endTime}"></div>
+										<div th:text="'終了日時 : ' + ${#temporals.format(product.endTime, 'yyyy-MM-dd HH:mm')}"></div>
 										<p style="margin-bottom: 0px">
-											<a th:href="@{/productShow}" class="btn btn-primary">詳細を確認する</a>
+											<a th:href="@{'/productShow'(id=${product.productId})}" class="btn btn-primary">詳細を確認する</a>
 										</p>
 									</div>
 								</div>
 							</div>
-							<a>もっと見る</a>
+							<!-- 終了間近の商品がない場合の処理 -->
+							<div th:if="${commingSoonSize} == false" >
+								<!-- 何故か表示されない -->
+								<h4>まだ商品が登録されていません</h4>
+							</div>
 						</div>
 						<!-- 見出し -->
 						<h3>入札数ランキング</h3>
