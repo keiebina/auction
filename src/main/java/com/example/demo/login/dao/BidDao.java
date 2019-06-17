@@ -4,5 +4,6 @@ import java.io.Serializable;
 
 public interface BidDao<T> extends Serializable{
 	
-	public Integer countByProductId(Integer productId);
+	public long countByProductId(int productId);
+	public long countBid();
 }

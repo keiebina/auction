@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,17 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Table(name = "bid")
+@NamedQueries({
+	@NamedQuery(
+			name = "countByProductId",
+			query = "SELECT count(b) FROM Bid b WHERE b.product.id = :id"
+			),
+	@NamedQuery(
+			name = "countBid",
+			query = "SELECT count(b) FROM Bid b "
+			)
+})
+
 @Entity
 @Data
 public class Bid {

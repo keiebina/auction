@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.login.daoImpl.DaoImpl;
 import com.example.demo.login.domain.model.Product;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.jdbc.ProductRepository;
@@ -60,6 +61,9 @@ public class UserController {
 	@Autowired
 	DataAccessService dataService;
 	
+	@Autowired
+	DaoImpl dao;
+	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView getLogin(ModelAndView mav) {
@@ -88,7 +92,7 @@ public class UserController {
 		boolean commingSoonSize = false;
 		try {
 			LocalDateTime now = LocalDateTime.now();
-			List<Product> products = dataService.getCommingSoon(now);
+			List<Product> products = dao.getCommingSoon(now);
 			commingSoonSize = true;
 			mav.addObject("products", products);
 		} catch (Exception e) {

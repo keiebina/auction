@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.login.domain.model.Product;
 import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.repository.jdbc.BidRepository;
 import com.example.demo.login.domain.repository.jdbc.ProductRepository;
 import com.example.demo.login.domain.repository.jdbc.UserRepository;
 import com.example.demo.login.domain.service.DataAccessService;
@@ -31,13 +32,16 @@ public class ProductController {
 	ProductService pService;
 	
 	@Autowired
-	DataAccessService dataService;
+	DataAccessService daService;
 	
 	@Autowired
 	ProductRepository pRepository;
 	
 	@Autowired
 	UserRepository uRepository;
+	
+	@Autowired
+	BidRepository bRepository;
 	
 	
 	@RequestMapping(value = "/productNew", method = RequestMethod.GET)
@@ -81,12 +85,16 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/productShow", method = RequestMethod.GET)
-	public ModelAndView getProductShow(@RequestParam("id") Integer id,ModelAndView mav, Principal principal) {
+	public ModelAndView getProductShow(@RequestParam("id") int productId,ModelAndView mav, Principal principal) {
 		String userId = principal.getName();
 		User loginUser = uRepository.findByUserId(userId);
-		//商品IDをデータベースから検索してそれをパラメータとして送る
-		Product product = dataService.findByProductId(id);
-		mav.addObject("product", product);
+		//商品IDをデータベースから検索
+		Product product = daService.findByProductId(productId);
+		//商品IDから入札数をカウント
+		long count = daService.countByProductId(productId);
+		
+		mav.addObject("count", count); 							//入札数
+		mav.addObject("product", product);						//標品情報
 		mav.addObject("loginUser", loginUser);                  //ログインユーザー情報
 		mav.addObject("userId", userId);                           //ログインユーザーID
 		mav.addObject("in", true);                                   //ログイン状態

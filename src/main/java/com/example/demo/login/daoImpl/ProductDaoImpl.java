@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -16,8 +15,12 @@ import com.example.demo.login.domain.model.Product;
 public class ProductDaoImpl implements ProductDao<Product>{
 	private static final long serialVersionUID = 1L;
 	
-	@PersistenceContext
+	
 	private EntityManager entityManager;
+	
+	public ProductDaoImpl() {
+		super();
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override

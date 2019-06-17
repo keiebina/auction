@@ -2,10 +2,11 @@ package com.example.demo.login.controller;
 
 import java.security.Principal;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ import com.example.demo.login.domain.service.UserService;
 
 @Controller
 public class BidController {
+	
+	EntityManager em;
 	
 	@Autowired
 	DataAccessService daService;
