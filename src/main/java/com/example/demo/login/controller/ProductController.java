@@ -53,6 +53,7 @@ public class ProductController {
 		return mav;
 	}
 	
+	@Transactional(readOnly = false)
 	@RequestMapping(value = "/productCreate", method = RequestMethod.POST)
 	public ModelAndView postProductCreate(@ModelAttribute @Validated Product product,BindingResult bindingResult,  ModelAndView mav) throws Exception {
 		if (bindingResult.hasErrors()) {
@@ -80,6 +81,7 @@ public class ProductController {
 			LocalDateTime startTime = LocalDateTime.now();
 			product.setStartTime(startTime);
 			product.setCurrentPrice(product.getStartPrice()); //現在価格に開始価格を格納
+			product.setStatusFlag(1); 									//出品中として1を格納(出品終了商品は0とする)
 			pRepository.saveAndFlush(product);
 			return new ModelAndView("redirect:/");
 		}
@@ -94,8 +96,13 @@ public class ProductController {
 		Product product = daService.findByProductId(productId);
 		//商品IDから入札数をカウント
 		long count = daService.countByProductId(productId);
+		//終了までの時間を計算
+		LocalDateTime now = LocalDateTime.now();
+		String timeToFinish = pService.timeCalculation(now, product.getEndTime());
+		System.out.println(timeToFinish);
 		//ウォッチリストテーブルを検索
 		boolean watchListFlag = daService.checkWatchList(loginUser.getUserId(), productId);      //既にウォッチリストに入っていた場合はtrue
+		mav.addObject("timeToFinish", timeToFinish);		//オークション終了までの時間を格納
 		mav.addObject("watchListFlag", watchListFlag);		//ウォッチリストに登録しているか判断
 		mav.addObject("count", count); 							//入札数
 		mav.addObject("product", product);						//標品情報

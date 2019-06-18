@@ -31,11 +31,7 @@ import lombok.Data;
 	@NamedQuery(
 			name = "findByProductId",
 			query = "SELECT p FROM Product p WHERE p.productId = :id"
-			),
-//	@NamedQuery(
-//			name = "findByUserId",
-//			query = "SELECT p FROM Product p WHERE p."
-//			)
+			)
 })
 @Entity
 @Data
@@ -83,6 +79,9 @@ public class Product {
 	
 	@Column(name = "image", length = 10000000)
 	private String image;                    													  //画像(BASE64形式）
+	
+	@Column(name = "status_flag")
+	private Integer statusFlag;																//オークション状況判断 0:終了 1:出品中
 	
 	@Transient                    																	//@Transientを使用するとテーブルに反映されない
 	private MultipartFile imageResource;

@@ -20,10 +20,6 @@ import lombok.Data;
 	@NamedQuery(
 			name = "countByProductId",
 			query = "SELECT count(b) FROM Bid b WHERE b.product.id = :id"
-			),
-	@NamedQuery(
-			name = "countBid",
-			query = "SELECT count(b) FROM Bid b "
 			)
 })
 
@@ -49,6 +45,6 @@ public class Bid {
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id")
-	private Product product;														//入札商品ID
+	private Product product;															//入札商品ID
 
 }

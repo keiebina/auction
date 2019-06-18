@@ -13,7 +13,7 @@
 				</div>
 				<div class="col-lg-4">
 					<h3>商品の説明</h3>
-					<div th:text="*{description}"></div>
+					<pre th:text="*{description}"></pre>
 				</div>
 				<div class="col-lg-4">
 					<h3>出品状況</h3>
@@ -28,7 +28,7 @@
 						</tr>
 						<tr>
 							<th>残り時間</th>
-							<td ></td>
+							<td th:text="${timeToFinish}" ></td>
 						</tr>
 						<tr>
 							<th>現在価格</th>

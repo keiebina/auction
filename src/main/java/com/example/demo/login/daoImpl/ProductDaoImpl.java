@@ -5,45 +5,44 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.login.dao.ProductDao;
 import com.example.demo.login.domain.model.Product;
+import com.example.demo.login.domain.service.DataAccessService;
 
 @Repository
 public class ProductDaoImpl implements ProductDao<Product>{
 	private static final long serialVersionUID = 1L;
 	
+	@Autowired
+	DataAccessService dataAccessService;
 	
-	private EntityManager entityManager;
+	private EntityManager em;
 	
-	public ProductDaoImpl() {
-		super();
-	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getCommingSoon(LocalDateTime now)throws DataAccessException {
-		return (List<Product>)entityManager
-				.createNamedQuery("getCommingSoon")
-				.setParameter("now", now)
-				.setMaxResults(3)
-				.getResultList();
+		em = dataAccessService.setEntitymanager(em);
+		List<Product> commingSoonProducts = (List<Product>)em
+																.createNamedQuery("getCommingSoon")
+																.setParameter("now", now)
+																.setMaxResults(3)
+																.getResultList();
+		em.close();
+		return commingSoonProducts;
 	}
-
 	@Override
 	public Product findByProductId(Integer productId)throws DataAccessException {
-		return (Product) entityManager
-				.createNamedQuery("findByProductId")
-				.setParameter("id", productId)
-				.getSingleResult();
+		em = dataAccessService.setEntitymanager(em);
+		Product product =  (Product) em
+								.createNamedQuery("findByProductId")
+								.setParameter("id", productId)
+								.getSingleResult();
+		em.close();
+		return product;
 	}
-
-	@Override
-	public List<Product> findByUserId(String userId) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
 }

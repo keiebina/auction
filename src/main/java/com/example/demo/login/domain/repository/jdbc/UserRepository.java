@@ -10,4 +10,5 @@ import com.example.demo.login.domain.model.User;
 public interface UserRepository extends JpaRepository<User, String>{
 	
 	public User findByUserId(String userId); 
+	
 }

@@ -36,9 +36,11 @@ public class MainController {
 		mav.addObject("in", false);
 		try {
 			userId = principal.getName();
+		}catch (Exception e) { }
+		if (userId != null) {
 			mav.addObject("userId", userId);
 			mav.addObject("in", true);
-		}catch (Exception e) { }
+		}
 		//終了間近商品の取得
 		boolean commingSoonFlag = false;
 		try {

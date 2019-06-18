@@ -24,7 +24,7 @@
 				<a class="navbar-brand" th:href="@{/}">オークションシステム</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a href="#">ようこそ、[[${userId}]]さん</a></li>
+				<li><a th:if="${in} == true" href="#">ようこそ、[[${userId}]]さん</a></li>
 				<li><a th:href="@{/productNew}">商品登録（管理者のみ）</a></li>
 			</ul>
 			<!-- ログインしていない場合の表示 -->
