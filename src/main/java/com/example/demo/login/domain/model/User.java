@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -24,42 +22,42 @@ import lombok.Data;
 public class User {
 	
 	@Id
-	@Column
+	@Column(name = "user_id")
 	@NotBlank
 	@Email
-	private String userId;                       //ユーザーID（メールアドレス形式）
+	private String userId;                      								 //ユーザーID（メールアドレス形式）
 	
-	@Column
+	@Column(name = "password", nullable = false)
 	@NotBlank
 	@Length(min = 4, max = 100)
 	@Pattern( regexp = "^[a-zA-Z0-9]+$")
-	private String password;                     //パスワード
+	private String password;                     							//パスワード
 	
-	@Column
+	@Column(name = "nickname", nullable = false)
 	@NotBlank
-	private String nickname;                     //公開されるユーザー名
+	private String nickname;                     							//公開されるユーザー名
 	
-	@Column
+	@Column(name = "user_name", nullable = false)
 	@NotBlank
-	private String userName;                     //氏名
+	private String userName;                    							 //氏名
 	
-	@Column
+	@Column(name = "gender", nullable = false)
 	@NotNull
-	private boolean gender;                      //性別
+	private boolean gender;                      							//性別
 	
-	@Column 
+	@Column(name = "birthday", nullable = false)
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate birthday;                  //生年月日
+	private LocalDate birthday;                  							//生年月日
 	
-	@Column
+	@Column(name = "postal_code", nullable = false)
+	@NotBlank	
+	private String postalCode;                  							//郵便番号
+	
+	@Column(name = "address", nullable = false)
 	@NotBlank
-	private String postalCode;                  //郵便番号
+	private String address;                    								//住所
 	
-	@Column
-	@NotBlank
-	private String address;                      //住所
-	
-	@Column
-	private String role;                         //管理者権限（ROLE_GENERAL　or ROLE_ADMIN)
-}
+	@Column(name = "role")
+	private String role;                         								//管理者権限（ROLE_GENERAL　or ROLE_ADMIN)
+}	

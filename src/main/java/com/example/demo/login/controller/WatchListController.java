@@ -35,7 +35,7 @@ public class WatchListController {
 	@Autowired
 	WatchListRepository wlRepository;
 	
-	@RequestMapping(value = "watchListShow", method = RequestMethod.GET)
+	@RequestMapping(value = "/watchListShow", method = RequestMethod.GET)
 	public ModelAndView getWatchListShow(ModelAndView mav, Principal principal) {
 		String userId = principal.getName();
 		List<WatchList> allWatchTable = daService.getWatchListByUserId(userId); 			//ログインユーザーの全ウォッチリストの取得
@@ -62,7 +62,7 @@ public class WatchListController {
 	
 
 	@Transactional(readOnly = false)
-	@RequestMapping(value = "watchListUpdate", method = RequestMethod.GET)
+	@RequestMapping(value = "/watchListUpdate", method = RequestMethod.GET)
 	public ModelAndView getWatchListUpdate(@RequestParam("id") Integer productId, ModelAndView mav, Principal principal) {
 		User loginUser = uService.getLoginUser(principal);							//ログインユーザー情報の取得
 		Product product = daService.findByProductId(productId);					//見ている商品情報の取得

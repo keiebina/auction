@@ -1,36 +1,32 @@
 package com.example.demo.login.domain.model;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import lombok.Data;
+
+@Table(name = "successful_bid")
+@Entity
+@Data
 public class SuccessfulBid {
 	
 	//落札済み商品
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer productId;              //自動採番
+	private Integer successfulId;              //自動採番
 	
-	@Column
-	private String productName;         //商品名
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;						//落札者
 	
-	@Column(name = "category")
-	private String category;               //カテゴリ
-	
-	@Column
-	private Integer state;                   //5段階 5,とても良い 4,良い 3,普通 2,やや悪い 1,悪い
-	
-	@Column
-	private String Description;           //商品の説明
-	
-	@Column
-	private LocalDateTime startTime;      //落札日時日時
-	
-	@Column
-	private Integer startPrice;                //落札価格価格
-
+	@ManyToOne
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;				//落札商品
 }

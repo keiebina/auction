@@ -20,6 +20,10 @@ import lombok.Data;
 	@NamedQuery(
 			name = "countByProductId",
 			query = "SELECT count(b) FROM Bid b WHERE b.product.id = :id"
+			),
+	@NamedQuery(
+			name = "getByProductIdOrderByBidPrice",
+			query = "SELECT b.user FROM Bid b WHERE b.product.id = :id ORDER BY b.bidPrice DESC"
 			)
 })
 

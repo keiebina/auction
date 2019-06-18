@@ -51,18 +51,10 @@ public class MainController {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		mav.addObject("commingSoonFlag", commingSoonFlag);
+		mav.addObject("commingSoonFlag", commingSoonFlag);								//終了間近商品
 		mav.addObject("categoryItems", productService.getCategoryItems());			//サイドバー表示アイテム
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/index :: index_contents");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/watchList", method = RequestMethod.GET)
-	public ModelAndView getWatchList(ModelAndView mav) {
-		mav.addObject("categoryItems", productService.getCategoryItems());			//サイドバー表示アイテム
-		mav.setViewName("layout/layout");
-		mav.addObject("contents", "user/watchList :: watchList_contents");
 		return mav;
 	}
 }

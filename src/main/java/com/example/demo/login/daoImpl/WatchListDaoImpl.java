@@ -30,7 +30,6 @@ public class WatchListDaoImpl implements WatchListDao<WatchList> {
 						.setParameter("productId", productId)
 						.getSingleResult();
 		em.close();
-		System.out.println(count);
 		if (count > 0) {
 			checkFlag = true;
 		}

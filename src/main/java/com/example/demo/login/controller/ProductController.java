@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.login.domain.model.Product;
+import com.example.demo.login.domain.model.SuccessfulBid;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.jdbc.BidRepository;
 import com.example.demo.login.domain.repository.jdbc.ProductRepository;
+import com.example.demo.login.domain.repository.jdbc.SuccessfulBidRepository;
 import com.example.demo.login.domain.repository.jdbc.UserRepository;
 import com.example.demo.login.domain.service.DataAccessService;
 import com.example.demo.login.domain.service.ProductService;
@@ -43,6 +45,9 @@ public class ProductController {
 	
 	@Autowired
 	BidRepository bRepository;
+	
+	@Autowired
+	SuccessfulBidRepository sbRepository;
 	
 	
 	@RequestMapping(value = "/productNew", method = RequestMethod.GET)
@@ -99,7 +104,18 @@ public class ProductController {
 		//終了までの時間を計算
 		LocalDateTime now = LocalDateTime.now();
 		String timeToFinish = pService.timeCalculation(now, product.getEndTime());
-		System.out.println(timeToFinish);
+		//終了時間が過ぎていたらtrue
+		boolean isAfter = pService.checkNowIsAfterEndTime(now, product.getEndTime());
+		//isAfterがtrueの場合はstatusFlagの更新
+		if (isAfter) {
+			product.setStatusFlag(0);
+			pRepository.saveAndFlush(product);																			//出品状況ステータスの変更
+			User successfulBidUser = daService.getByProductIdOrderByBidPrice(productId); 			//入札価格が一番大きいユーザーの取得
+			SuccessfulBid successfulBid = new SuccessfulBid();
+			successfulBid.setUser(successfulBidUser);
+			successfulBid.setProduct(product);
+			sbRepository.saveAndFlush(successfulBid);																	//落札ユーザー、落札商品情報の保存
+		}
 		//ウォッチリストテーブルを検索
 		boolean watchListFlag = daService.checkWatchList(loginUser.getUserId(), productId);      //既にウォッチリストに入っていた場合はtrue
 		mav.addObject("timeToFinish", timeToFinish);		//オークション終了までの時間を格納

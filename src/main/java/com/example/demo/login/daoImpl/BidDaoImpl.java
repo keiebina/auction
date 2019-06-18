@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.login.dao.BidDao;
 import com.example.demo.login.domain.model.Bid;
+import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.DataAccessService;
 
 @Repository
@@ -28,6 +29,18 @@ public class BidDaoImpl implements BidDao<Bid> {
 						.getSingleResult();
 		em.close();
 		return count;
+	}
+
+	@Override
+	public User getByProductIdOrderByBidPrice(int productId)throws DataAccessException {
+		em = dataAccessService.setEntitymanager(em);
+		User successfulBidUser = (User) em
+				.createNamedQuery("getByProductIdOrderByBidPrice")
+				.setParameter("id", productId)
+				.setMaxResults(1)
+				.getSingleResult();
+		em.close();
+		return successfulBidUser;
 	}
 
 }

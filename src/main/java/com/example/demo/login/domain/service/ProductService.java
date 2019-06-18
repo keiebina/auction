@@ -100,26 +100,15 @@ public class ProductService {
 			String timeToFinish = sb.toString();
 			return timeToFinish;
 		}
-		
 	}
-//	public long timeCalculation(LocalDateTime now, LocalDateTime endTime) {
-//		long secondsToFinish = ChronoUnit.MINUTES.between(now, endTime);
-//		//分で表示するか、時間で表示するか判断
-//		if (secondsToFinish > 1440) {
-//			long day = secondsToFinish/1440;
-//			secondsToFinish = secondsToFinish%1440;
-//			long hour = secondsToFinish/60;
-//			long minutes = secondsToFinish % 60;
-//			System.out.println(day + "日と" + hour + "時間" + minutes + "分");
-//			
-//		}else if (secondsToFinish > 60) {
-//			long hour = secondsToFinish/60;
-//			long minutes = secondsToFinish % 60;
-//			System.out.println(hour + "時間" + minutes + "分");
-//			
-//		}else {
-//			System.out.println( secondsToFinish + "分");
-//		}
-//		return secondsToFinish;
-//	}
+	
+//========================================================================================================
+//											オークション終了判断
+//========================================================================================================
+	
+	public boolean checkNowIsAfterEndTime(LocalDateTime now, LocalDateTime endTime) {
+		boolean isAfter = false;
+		isAfter = now.isAfter(endTime);      		//終了時間を過ぎていたらtrueを返す
+		return isAfter;
+	}
 }

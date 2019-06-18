@@ -7,12 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.login.daoImpl.BidDaoImpl;
 import com.example.demo.login.daoImpl.ProductDaoImpl;
 import com.example.demo.login.daoImpl.WatchListDaoImpl;
 import com.example.demo.login.domain.model.Product;
+import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.WatchList;
 
 @Service
@@ -41,11 +43,11 @@ public class DataAccessService {
 //														product
 //==================================================================================================================
 	
-	public List<Product> getCommingSoon(LocalDateTime now){
+	public List<Product> getCommingSoon(LocalDateTime now){					//indexページで表示する終了間近商品３件を取得
 		return productDaoImpl.getCommingSoon(now);
 	}
 	
-	public Product findByProductId(Integer productId) {
+	public Product findByProductId(Integer productId) {									//商品IDから商品情報全て取得
 		return productDaoImpl.findByProductId(productId);
 	}
 	
@@ -53,21 +55,29 @@ public class DataAccessService {
 //														bid
 //==================================================================================================================
 
-	public long countByProductId(int productId) {
-		return bidDaoimpl.countByProductId(productId);
+	public long countByProductId(int productId) {												//商品IDから商品の入札数を数える
+		return bidDaoimpl.countByProductId(productId);					
+	}
+	public User getByProductIdOrderByBidPrice(int productId) {							//商品IDから一番入札価格が大きいユーザーを取得
+		try {
+			return bidDaoimpl.getByProductIdOrderByBidPrice(productId);
+		} catch (DataAccessException e) {
+			// 入札数が０の場合に起こる
+		}
+		return null;
 	}
 	
 //==================================================================================================================
 //														watchList
 //==================================================================================================================
 	
-	public boolean checkWatchList(String userId, Integer productId) {
+	public boolean checkWatchList(String userId, Integer productId) {									//ユーザーIDと商品IDが一致している商品があるか判断
 		return watchListDaoImpl.checkWatchList(userId, productId);
 	}
-	public Integer getWatchListIdByUserIdAndProductId(String userId, Integer productId) {
+	public Integer getWatchListIdByUserIdAndProductId(String userId, Integer productId) {		//ユーザーIDと商品IDが一致しているウォッチリストIDを取得
 		return watchListDaoImpl.getWatchListIdByUserIdAndProductId(userId, productId);
 	}
-	public List<WatchList> getWatchListByUserId(String userId){
+	public List<WatchList> getWatchListByUserId(String userId){										//ユーザーIDからウォッチリスト情報全て取得
 		return watchListDaoImpl.getWatchListByUserId(userId);
 	}
 }
