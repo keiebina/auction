@@ -1,9 +1,7 @@
 package com.example.demo.login.controller;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.login.daoImpl.DaoImpl;
-import com.example.demo.login.domain.model.Product;
 import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.repository.jdbc.ProductRepository;
 import com.example.demo.login.domain.repository.jdbc.UserRepository;
 import com.example.demo.login.domain.service.DataAccessService;
 import com.example.demo.login.domain.service.ProductService;
@@ -47,9 +42,6 @@ public class UserController {
 	UserRepository uRepository;
 	
 	@Autowired
-	ProductRepository pRepository;
-	
-	@Autowired
 	PasswordEncoder passwordEncoder;
 	
 	@Autowired
@@ -60,50 +52,6 @@ public class UserController {
 	
 	@Autowired
 	DataAccessService dataService;
-	
-	@Autowired
-	DaoImpl dao;
-	
-	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView getLogin(ModelAndView mav) {
-		mav.setViewName("login/login");
-		return mav;
-	}
-	
-//	@RequestMapping(value = "/login", method = RequestMethod.POST)
-//	public ModelAndView postLogin(ModelAndView mav, Principal principal) {
-//		System.out.println("ログイン処理実行");
-//		String userId = principal.getName();
-//		System.out.println(userId);
-//		return new ModelAndView("redirect:/");
-//	}
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView getIndex(ModelAndView mav, Principal principal) {
-		String userId = null;
-		mav.addObject("in", false);
-		try {
-			userId = principal.getName();
-			mav.addObject("userId", userId);
-			mav.addObject("in", true);
-		}catch (Exception e) { }
-		//終了間近商品の取得
-		boolean commingSoonSize = false;
-		try {
-			LocalDateTime now = LocalDateTime.now();
-			List<Product> products = dao.getCommingSoon(now);
-			commingSoonSize = true;
-			mav.addObject("products", products);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		mav.addObject("commingSoonSize", commingSoonSize);
-		mav.addObject("categoryItems", productService.getCategoryItems());
-		mav.setViewName("layout/layout");
-		mav.addObject("contents", "user/index :: index_contents");
-		return mav;
-	}
 	
 	@RequestMapping(value = "/userNew", method = RequestMethod.GET)
 	public ModelAndView getUserNew(@ModelAttribute User user, ModelAndView mav) {
@@ -140,6 +88,7 @@ public class UserController {
 		mav.addObject("loginUser", loginUser);
 		mav.addObject("userId", userId);
 		mav.addObject("in", true);
+		mav.addObject("categoryItems", productService.getCategoryItems());      //サイドバー表示アイテム
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/show :: show_contents");
 		return mav;

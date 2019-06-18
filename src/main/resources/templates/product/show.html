@@ -41,8 +41,9 @@
 					</table>
 						<!-- 入札ボタン -->
 						<a  class="btn btn-primary center-block " th:href="@{'/bidNew'(id=*{productId})}" style="width:80%;">入札する</a>
-						<!-- ウォッチリスト追加ボタン -->
-						<a  class="btn btn-primary center-block " th:href="@{'/watchListNew'(id=*{productId})}" style="width:80%; margin-top:20px;">ウォッチリストに追加する</a>
+						<!-- ウォッチリスト追加・削除ボタン -->
+						<a  th:if="${watchListFlag} == false" class="btn btn-primary center-block " th:href="@{'/watchListUpdate'(id=*{productId})}" style="width:80%; margin-top:20px;">ウォッチリストに追加する</a>
+						<a  th:if="${watchListFlag} == true" class="btn btn-danger center-block " th:href="@{'/watchListUpdate'(id=*{productId})}" style="width:80%; margin-top:20px;">ウォッチリストから削除する</a>
 				</div>
 			</div>
 		</div>

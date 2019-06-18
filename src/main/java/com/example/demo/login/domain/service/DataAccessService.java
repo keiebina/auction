@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.login.daoImpl.DaoImpl;
 import com.example.demo.login.domain.model.Product;
+import com.example.demo.login.domain.model.WatchList;
 
 @Service
 public class DataAccessService {
@@ -32,13 +33,21 @@ public class DataAccessService {
 //														bid
 //==================================================================================================================
 
-	//ここでcatchに
 	public long countByProductId(int productId) {
-//		try {
-			return dao.countByProductId(productId);
-//		} catch (DataAccessException e) {
-//			return 0L;
-//		}
+		return dao.countByProductId(productId);
 	}
 	
+//==================================================================================================================
+//														watchList
+//==================================================================================================================
+	
+	public boolean checkWatchList(String userId, Integer productId) {
+		return dao.checkWatchList(userId, productId);
+	}
+	public Integer getWatchListIdByUserIdAndProductId(String userId, Integer productId) {
+		return dao.getWatchListIdByUserIdAndProductId(userId, productId);
+	}
+	public List<WatchList> getWatchListByUserId(String userId){
+		return dao.getWatchListByUserId(userId);
+	}
 }

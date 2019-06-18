@@ -10,7 +10,7 @@
 						<!-- 見出しt -->
 						<h3>終了間近</h3>
 						<div class="row">
-							<div th:if="${commingSoonSize} == true" class="col-lg-4" th:each="product : ${products}" >
+							<div th:if="${commingSoonFlag} == true" class="col-lg-4" th:each="product : ${products}" >
 								<div  class="thumbnail" >
 									 <img th:src="${product.image}" style="width:275px; height:275px;"/>
 									<div class="caption">
@@ -25,7 +25,7 @@
 								</div>
 							</div>
 							<!-- 終了間近の商品がない場合の処理 -->
-							<div th:if="${commingSoonSize} == false" >
+							<div th:if="${commingSoonFlag} == false" >
 								<!-- 何故か表示されない -->
 								<h4>まだ商品が登録されていません</h4>
 							</div>

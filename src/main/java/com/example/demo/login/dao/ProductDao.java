@@ -11,4 +11,6 @@ public interface ProductDao<T> extends Serializable {
 	public List<T> getCommingSoon(LocalDateTime now);
 	
 	public Product findByProductId(Integer productId); 
+	
+	public List<Product> findByUserId(String userId);
 }

@@ -9,6 +9,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -84,6 +85,7 @@ public class ProductController {
 		}
 	}
 	
+	@Transactional(readOnly = false)
 	@RequestMapping(value = "/productShow", method = RequestMethod.GET)
 	public ModelAndView getProductShow(@RequestParam("id") int productId,ModelAndView mav, Principal principal) {
 		String userId = principal.getName();
@@ -92,7 +94,9 @@ public class ProductController {
 		Product product = daService.findByProductId(productId);
 		//商品IDから入札数をカウント
 		long count = daService.countByProductId(productId);
-		
+		//ウォッチリストテーブルを検索
+		boolean watchListFlag = daService.checkWatchList(loginUser.getUserId(), productId);      //既にウォッチリストに入っていた場合はtrue
+		mav.addObject("watchListFlag", watchListFlag);		//ウォッチリストに登録しているか判断
 		mav.addObject("count", count); 							//入札数
 		mav.addObject("product", product);						//標品情報
 		mav.addObject("loginUser", loginUser);                  //ログインユーザー情報

@@ -40,4 +40,10 @@ public class ProductDaoImpl implements ProductDao<Product>{
 				.getSingleResult();
 	}
 
+	@Override
+	public List<Product> findByUserId(String userId) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
 }

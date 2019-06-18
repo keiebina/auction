@@ -7,101 +7,52 @@
 	<body >
 		<div th:fragment="show_contents">
 			<div class="col-md-10 col-lg-10 main">
-						<!-- 見出しt -->
-						<h3>登録情報</h3>
-						<div class="row">
-							<div class="col-lg-6">
-								<table class="table table-bordered" th:object="${loginUser}">
-									<tr>
-										<th class="col-lg-4 active">ユーザーID</th>
-										<td>
-											<p th:text="*{userId}"></p>
-										</td>
-									</tr>
-									<tr>
-										<th class="active">ニックネーム</th>
-										<td>
-											<p th:text="*{nickname}"></p>
-										</td>
-									</tr>
-									<tr>
-										<th class="active">氏名</th>
-										<td>
-											<p th:text="*{userName}"></p>
-										</td>
-									</tr>
-									<tr>
-										<th class="active">生年月日</th>
-										<td>
-											<p th:text="*{birthday}"></p>
-										</td>
-									</tr>
-									<tr>
-										<th class="active">郵便番号</th>
-										<td>
-											<p th:text="*{postalCode}"></p>
-										</td>
-									</tr>
-									<tr>
-										<th class="active">住所</th>
-										<td>
-											<p th:text="*{address}"></p>
-										</td>
-									</tr>
-								</table>
-								<a th:href="@{/userEdit}">登録情報を編集する</a>
-							</div>
-						</div>
-						<!-- 見出し -->
-						<h3>入札数ランキング</h3>
-						<div class="row">
-							<div class="col-lg-4">
-								<div class="thumbnail">
-									<a href=""> <img src="http://placehold.it/150x150">
-									</a>
-									<div class="caption">
-										<p>
-											<b>商品名</b>
-										</p>
-										<p>現在の価格</p>
-										<p style="margin-bottom: 0px">
-											<a href="" class="btn btn-primary">詳細を確認する</a>
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div class="thumbnail">
-									<a href=""> <img src="http://placehold.it/150x150">
-									</a>
-									<div class="caption">
-										<p>
-											<b>商品名</b>
-										</p>
-										<p>現在の価格</p>
-										<p style="margin-bottom: 0px">
-											<a href="" class="btn btn-primary">詳細を確認する</a>
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div class="thumbnail">
-									<a href=""> <img src="http://placehold.it/150x150">
-									</a>
-									<div class="caption">
-										<p>
-											<b>商品名</b>
-										</p>
-										<p>現在の価格</p>
-										<p style="margin-bottom: 0px">
-											<a href="" class="btn btn-primary">詳細を確認する</a>
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
+				<!-- 見出しt -->
+				<h3>登録情報</h3>
+				<div class="row">
+					<div class="col-lg-6">
+						<table class="table table-bordered" th:object="${loginUser}">
+							<tr>
+								<th class="col-lg-4 active">ユーザーID</th>
+								<td>
+									<p th:text="*{userId}"></p>
+								</td>
+							</tr>
+							<tr>
+								<th class="active">ニックネーム</th>
+								<td>
+									<p th:text="*{nickname}"></p>
+								</td>
+							</tr>
+							<tr>
+								<th class="active">氏名</th>
+								<td>
+									<p th:text="*{userName}"></p>
+								</td>
+							</tr>
+							<tr>
+								<th class="active">生年月日</th>
+								<td>
+									<p th:text="*{birthday}"></p>
+								</td>
+							</tr>
+							<tr>
+								<th class="active">郵便番号</th>
+								<td>
+									<p th:text="*{postalCode}"></p>
+								</td>
+							</tr>
+							<tr>
+								<th class="active">住所</th>
+								<td>
+									<p th:text="*{address}"></p>
+								</td>
+							</tr>
+						</table>
+						<a th:href="@{/userEdit}">登録情報を編集する</a>
 					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
