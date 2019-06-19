@@ -55,4 +55,15 @@ public class ProductDaoImpl implements ProductDao<Product>{
 		em.close();
 		return list;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> getProductsByCategory(String category)throws DataAccessException {
+		em = dataAccessService.setEntitymanager(em);
+		List<Product> list = (List<Product>)em
+					.createNamedQuery("getProductsByCategory")
+					.setParameter("category", category)
+					.getResultList();
+		em.close();
+		return list;
+	}
 }

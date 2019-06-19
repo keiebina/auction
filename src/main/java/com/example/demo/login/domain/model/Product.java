@@ -34,6 +34,10 @@ import org.springframework.web.multipart.MultipartFile;
 	@NamedQuery(
 			name = "getProductByStatusFlag",
 			query = "SELECT p FROM Product p WHERE p.statusFlag = 1"
+			),
+	@NamedQuery(
+			name = "getProductsByCategory",
+			query = "SELECT p FROM Product p WHERE p.statusFlag = 1 AND p.category = :category"
 			)
 })
 @Entity

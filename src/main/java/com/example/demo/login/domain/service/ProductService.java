@@ -43,25 +43,6 @@ public class ProductService {
 		return stateItems;
 	}
 		
-	//category用
-//		public List<String> getCategoryItems(){
-//			List<String> categoryItems = new ArrayList<String>();
-//			categoryItems.add("コンピュータ");
-//			categoryItems.add("家電、AV｜カメラ");
-//			categoryItems.add("音楽｜CD");
-//			categoryItems.add("本、雑誌｜漫画");
-//			categoryItems.add("映画、ビデオ｜DVD");
-//			categoryItems.add("おもちゃ｜ゲーム");
-//			categoryItems.add("ホビー｜カルチャー");
-//			categoryItems.add("アンティーク、コレクション");
-//			categoryItems.add("スポーツ、レジャー");
-//			categoryItems.add("ファッション｜ブランド別");
-//			categoryItems.add("アクセサリー｜時計");
-//			categoryItems.add("住まい、インテリア");
-//			categoryItems.add("事務、店舗用品");
-//			return categoryItems;
-//	}
-		
 	public Map<Integer, String> getCategoryItems(){
 		Map<Integer, String> map = new HashMap<Integer, String>();
 		map.put(0, "コンピュータ");
