@@ -8,5 +8,4 @@ import com.example.demo.login.domain.model.SuccessfulBid;
 @Repository
 public interface SuccessfulBidRepository extends JpaRepository<SuccessfulBid, Integer>{
 
-	
 }

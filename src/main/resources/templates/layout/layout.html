@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4/3.0.4.RELEASE">
+	 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <meta charset="UTF-8"></meta>
@@ -24,8 +24,8 @@
 				<a class="navbar-brand" th:href="@{/}">オークションシステム</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a th:if="${in} == true" href="#">ようこそ、[[${userId}]]さん</a></li>
-				<li><a th:href="@{/productNew}">商品登録（管理者のみ）</a></li>
+				<li><a th:if="${in} == true" th:href="@{/userShow}">ようこそ、[[${userId}]]さん</a></li>
+				<li role="presentation" sec:authorize="hasRole('ADMIN')"><a th:href="@{/productNew}">商品登録（管理者のみ）</a></li>
 			</ul>
 			<!-- ログインしていない場合の表示 -->
 			<ul th:if="${in} == false" class="nav navbar-nav navbar-right">
@@ -39,10 +39,6 @@
                 	<button class="btn btn-link pull-right navbar-brand" type="submit">ログアウト</button>
             	</form>
 			</div>
-<!-- 			<ul th:if="in" class="nav navbar-nav navbar-right"> -->
-<!-- 				<li>ようこそ、[[${userId}]]さん</li> -->
-<!-- 				<li><a th:href="@{/logout}">ログアウト</a></li> -->
-<!-- 			</ul> -->
 		</div>
 	</nav>
 	<!-- 検索フォーム、リンクボタン -->
@@ -57,7 +53,7 @@
 					</form>
 					<a th:if="${in} == true" class="btn btn-link col-lg-2" th:href="@{/userShow}">マイページ</a> <a
 						th:if="${in} == true" class="btn btn-link col-lg-2" th:href="@{/watchListShow}">ウォッチリスト</a> <a
-						th:if="${in} == true" class="btn btn-link col-lg-2" href="#">落札済みリスト</a>
+						th:if="${in} == true" class="btn btn-link col-lg-2" th:href="@{/successfulBid}">落札済みリスト</a>
 				</div>
 			</div>
 

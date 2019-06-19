@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.antMatchers("/login").permitAll()             //ログインページは直リンクOK
 				.antMatchers("/userNew").permitAll()       //ユーザー登録画面は直リンクOK
 				.antMatchers("/userCreate").permitAll()       //ユーザー登録画面は直リンクOK
+				.antMatchers("/productNew").hasAuthority("ROLE_ADMIN")      //管理者以外は商品登録画面表示不可
 				.anyRequest().authenticated();                  //それ以外は直リンク禁止
 		
 		//ログイン処理
@@ -69,8 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/");
 		
-		//CSRF対策を無効に設定（一時的）
-		http.csrf().disable();
+//		//CSRF対策を無効に設定（一時的）
+//		http.csrf().disable();
 	}
 	
 	@Override

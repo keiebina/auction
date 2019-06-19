@@ -7,11 +7,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Table(name = "successful_bid")
+@NamedQueries({
+	@NamedQuery(
+			name = "getProductsByUserId",
+			query = "SELECT sb.product FROM SuccessfulBid sb WHERE sb.user.id = :id "
+			)
+})
+
 @Entity
 @Data
 public class SuccessfulBid {

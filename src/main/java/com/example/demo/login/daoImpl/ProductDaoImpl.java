@@ -45,4 +45,14 @@ public class ProductDaoImpl implements ProductDao<Product>{
 		em.close();
 		return product;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> getProductByStatusFlag()throws DataAccessException {
+		em = dataAccessService.setEntitymanager(em);
+		List<Product> list = (List<Product>)em
+					.createNamedQuery("getProductByStatusFlag")
+					.getResultList();
+		em.close();
+		return list;
+	}
 }

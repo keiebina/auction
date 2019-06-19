@@ -5,10 +5,27 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.login.domain.model.Product;
+import com.example.demo.login.domain.model.SuccessfulBid;
+import com.example.demo.login.domain.model.User;
+import com.example.demo.login.domain.repository.jdbc.ProductRepository;
+import com.example.demo.login.domain.repository.jdbc.SuccessfulBidRepository;
 
 @Service
 public class ProductService {
+	
+	@Autowired
+	DataAccessService daService;
+	
+	@Autowired
+	ProductRepository pRepository;
+	
+	@Autowired
+	SuccessfulBidRepository sbRepository;
+	
 //	===================================================================================================
 //										フォームのプルダウンリストの内容を設定
 //	===================================================================================================
@@ -47,7 +64,8 @@ public class ProductService {
 //									オークション残り時間
 //====================================================================================================
 	
-	public String timeCalculation(LocalDateTime now, LocalDateTime endTime) {
+	public String timeCalculation(LocalDateTime endTime) {
+		LocalDateTime now = LocalDateTime.now();
 		long secondsToFinish = ChronoUnit.SECONDS.between(now, endTime);
 		StringBuilder sb = new StringBuilder();
 		//残り1日以上の判断
@@ -103,12 +121,37 @@ public class ProductService {
 	}
 	
 //========================================================================================================
-//											オークション終了判断
+//											オークション終了判断、商品登録時バリデーション
 //========================================================================================================
 	
-	public boolean checkNowIsAfterEndTime(LocalDateTime now, LocalDateTime endTime) {
+	public boolean checkNowIsAfterEndTime(LocalDateTime endTime) {
+		LocalDateTime now = LocalDateTime.now();
 		boolean isAfter = false;
 		isAfter = now.isAfter(endTime);      		//終了時間を過ぎていたらtrueを返す
 		return isAfter;
+	}
+
+//========================================================================================================
+//											終了時間の過ぎた商品のstatusFlag変更（全商品のチェック）
+//========================================================================================================
+
+	public void changeStatusFlag(){
+		List<Product> list = daService.getProductByStatusFlag();
+		Product product = new Product();
+		for (int i = 0; i < list.size(); i++) {
+			product = list.get(i);
+			boolean result = checkNowIsAfterEndTime(product.getEndTime());
+			if (result) {
+				product.setStatusFlag(0);
+				pRepository.saveAndFlush(product);
+				User successfulBidUser = daService.getByProductIdOrderByBidPrice(product.getProductId());
+				if (successfulBidUser != null) {
+					SuccessfulBid successfulBid = new SuccessfulBid();
+					successfulBid.setUser(successfulBidUser);
+					successfulBid.setProduct(product);
+					sbRepository.saveAndFlush(successfulBid);
+				}
+			}
+		}
 	}
 }

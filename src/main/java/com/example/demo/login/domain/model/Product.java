@@ -31,6 +31,10 @@ import lombok.Data;
 	@NamedQuery(
 			name = "findByProductId",
 			query = "SELECT p FROM Product p WHERE p.productId = :id"
+			),
+	@NamedQuery(
+			name = "getProductByStatusFlag",
+			query = "SELECT p FROM Product p WHERE p.statusFlag = 1"
 			)
 })
 @Entity

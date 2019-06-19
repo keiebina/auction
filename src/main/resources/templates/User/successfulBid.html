@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	<body >
+		<div th:fragment="successfulBid_contents">
+			<div class="col-md-10 col-lg-10 main">
+				<!-- 見出しt -->
+				<h3>落札済み商品一覧</h3>
+				<div class="row">
+					<div th:if="${successfulBidFlag} == true" class="col-lg-4" th:each="product : ${productList}" >
+						<div  class="thumbnail" >
+							 <img th:src="${product.image}" style="width:275px; height:275px;"/>
+							<div class="caption">
+								<div >
+								</div>
+								<div th:text="'落札価格 : ' + ${product.currentPrice} + ' 円'"></div>
+								<div th:text="'落札日時 : ' + ${#temporals.format(product.endTime, 'yyyy-MM-dd HH:mm')}"></div>
+								<p style="margin-bottom: 0px">
+									<a th:href="@{'/productShow'(id=${product.productId})}" class="btn btn-primary">詳細を確認する</a>
+								</p>
+							</div>
+						</div>
+					</div>
+					<!-- 終了間近の商品がない場合の処理 -->
+					<div th:if="${successfulBidFlag} == false" >
+						<h4>まだ落札した商品はありません</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

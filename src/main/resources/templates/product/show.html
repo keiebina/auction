@@ -9,7 +9,9 @@
 			<div class="row" th:object="${product}">
 				<div class="col-lg-4">
 					<h3>商品画像</h3>
-					<img th:src="*{image}" style="width:100%; "/>
+					<div style="text-align:center;">
+						<img th:src="*{image}"/>
+					</div>
 				</div>
 				<div class="col-lg-4">
 					<h3>商品の説明</h3>
@@ -28,10 +30,12 @@
 						</tr>
 						<tr>
 							<th>残り時間</th>
-							<td th:text="${timeToFinish}" ></td>
+							<td th:if="${product.statusFlag} == 1" th:text="${timeToFinish}" ></td>
+							<td th:if="${product.statusFlag} == 0" th:text="終了" ></td>
 						</tr>
 						<tr>
-							<th>現在価格</th>
+							<th th:if="${product.statusFlag} == 1">現在価格</th>
+							<th th:if="${product.statusFlag} == 0">終了価格</th>
 							<td th:text="*{currentPrice}"></td>
 						</tr>
 						<tr>

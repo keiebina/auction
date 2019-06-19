@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.login.daoImpl.BidDaoImpl;
 import com.example.demo.login.daoImpl.ProductDaoImpl;
+import com.example.demo.login.daoImpl.SuccessfulBidDaoImpl;
 import com.example.demo.login.daoImpl.WatchListDaoImpl;
 import com.example.demo.login.domain.model.Product;
 import com.example.demo.login.domain.model.User;
@@ -32,6 +33,9 @@ public class DataAccessService {
 	@Autowired
 	WatchListDaoImpl watchListDaoImpl;
 	
+	@Autowired
+	SuccessfulBidDaoImpl successfulBidDaoImpl;
+	
 	public EntityManager setEntitymanager(EntityManager em) {
 		em = entityManager;
 		return em;
@@ -49,6 +53,9 @@ public class DataAccessService {
 	
 	public Product findByProductId(Integer productId) {									//商品IDから商品情報全て取得
 		return productDaoImpl.findByProductId(productId);
+	}
+	public List<Product> getProductByStatusFlag(){
+		return productDaoImpl.getProductByStatusFlag();								//出品中の商品情報全て取得
 	}
 	
 //==================================================================================================================
@@ -79,5 +86,13 @@ public class DataAccessService {
 	}
 	public List<WatchList> getWatchListByUserId(String userId){										//ユーザーIDからウォッチリスト情報全て取得
 		return watchListDaoImpl.getWatchListByUserId(userId);
+	}
+	
+//==================================================================================================================
+//														successfulBid
+//==================================================================================================================
+
+	public List<Product> getProductsByUserId(String userId){
+		return successfulBidDaoImpl.getProductsByUserId(userId);				//ユーザーが落札した商品情報を全て取得
 	}
 }

@@ -65,11 +65,12 @@
                 </div>
                 
                 <!-- endTime -->
-                <div class="form-group" th:classappend="${#fields.hasErrors('endTime')} ? 'has-error' ">
+                <div class="form-group" th:classappend="${#fields.hasErrors('endTime')} or ${errorMassage} != null? 'has-error' ">
                     <label class="col-md-2 control-label">終了日時</label>
                     <div class="col-sm-5">
                         <input type="datetime-local" name="endTime" class="form-control" th:field="*{endTime}"> 
                         <span class="text-danger" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">endTime error</span>
+                        <span class="text-danger" th:if="${errorMassage} != null" th:text="${errorMassage}" >endTime error</span>
                     </div>
                 </div>
                 
