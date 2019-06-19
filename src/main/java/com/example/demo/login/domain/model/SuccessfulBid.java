@@ -11,8 +11,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import lombok.Data;
-
 @Table(name = "successful_bid")
 @NamedQueries({
 	@NamedQuery(
@@ -22,7 +20,6 @@ import lombok.Data;
 })
 
 @Entity
-@Data
 public class SuccessfulBid {
 	
 	//落札済み商品
@@ -38,4 +35,30 @@ public class SuccessfulBid {
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;				//落札商品
+
+	public Integer getSuccessfulId() {
+		return successfulId;
+	}
+
+	public void setSuccessfulId(Integer successfulId) {
+		this.successfulId = successfulId;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
+	
 }

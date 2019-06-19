@@ -34,11 +34,12 @@
                 </div>
                 
                 <!-- password -->
-                <div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error' ">
+                <div class="form-group" th:classappend="${#fields.hasErrors('password')} or ${errorMassage} != null ? 'has-error' ">
                     <label class="col-md-2 control-label">パスワード</label>
                     <div class="col-sm-5">
                         <input type="text" name="password" class="form-control" th:field="*{password}"> 
-                        <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">userId error</span>
+                        <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">userPassword error</span>
+                        <span class="text-danger" th:if="${errorMassage} != null" th:text="${errorMassage}">userPassword error</span>
                     </div>
                 </div>
                 

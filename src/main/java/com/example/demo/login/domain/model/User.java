@@ -9,16 +9,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Data;
-
 @Table(name = "users")
 @Entity
-@Data
 public class User {
 	
 	@Id
@@ -27,10 +23,9 @@ public class User {
 	@Email
 	private String userId;                      								 //ユーザーID（メールアドレス形式）
 	
-	@Column(name = "password", nullable = false)
+	@Column(name = "password")
 	@NotBlank
 	@Length(min = 4, max = 100)
-	@Pattern( regexp = "^[a-zA-Z0-9]+$")
 	private String password;                     							//パスワード
 	
 	@Column(name = "nickname", nullable = false)
@@ -60,4 +55,78 @@ public class User {
 	
 	@Column(name = "role")
 	private String role;                         								//管理者権限（ROLE_GENERAL　or ROLE_ADMIN)
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public boolean isGender() {
+		return gender;
+	}
+
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	
 }	

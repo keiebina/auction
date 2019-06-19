@@ -11,8 +11,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import lombok.Data;
-
 @Table(name = "watch_list")
 @NamedQueries({
 	@NamedQuery(
@@ -32,7 +30,6 @@ import lombok.Data;
 })
 
 @Entity
-@Data
 public class WatchList {
 
 	@Id
@@ -47,4 +44,30 @@ public class WatchList {
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
+
+	public Integer getWatchListId() {
+		return watchListId;
+	}
+
+	public void setWatchListId(Integer watchListId) {
+		this.watchListId = watchListId;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
+	
 }

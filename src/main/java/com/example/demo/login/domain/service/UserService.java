@@ -3,6 +3,8 @@ package com.example.demo.login.domain.service;
 
 
 import java.security.Principal;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,6 +40,15 @@ public class UserService {
 			System.out.println("不一致");
 			result = false;
 		}
+		return result;
+	}
+//パスワードが正規表現のパターンと一致するかチェック=======================================================================
+	public boolean patternCheck(String password) {
+		boolean result = false;
+		Pattern p = Pattern.compile("^[a-zA-Z0-9]+$");
+		Matcher m = p.matcher(password);
+		result = m.find();
+		System.out.println(result);
 		return result;
 	}
 }

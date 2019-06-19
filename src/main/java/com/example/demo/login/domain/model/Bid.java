@@ -13,8 +13,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
-
 @Table(name = "bid")
 @NamedQueries({
 	@NamedQuery(
@@ -28,7 +26,6 @@ import lombok.Data;
 })
 
 @Entity
-@Data
 public class Bid {
 	
 	@Id
@@ -51,4 +48,45 @@ public class Bid {
 	@JoinColumn(name = "product_id")
 	private Product product;															//入札商品ID
 
+	public Integer getBidId() {
+		return bidId;
+	}
+
+	public void setBidId(Integer bidId) {
+		this.bidId = bidId;
+	}
+
+	public Integer getCurrentPrice() {
+		return currentPrice;
+	}
+
+	public void setCurrentPrice(Integer currentPrice) {
+		this.currentPrice = currentPrice;
+	}
+
+	public Integer getBidPrice() {
+		return bidPrice;
+	}
+
+	public void setBidPrice(Integer bidPrice) {
+		this.bidPrice = bidPrice;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	
 }

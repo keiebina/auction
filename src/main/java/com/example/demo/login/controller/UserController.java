@@ -65,19 +65,28 @@ public class UserController {
 	@RequestMapping(value = "/userCreate", method = RequestMethod.POST)
 	@Transactional(readOnly = false)
 	public ModelAndView postUserCreate(@ModelAttribute @Validated User user,BindingResult bindingResult, ModelAndView mav) {
-		if (bindingResult.hasErrors()) {
+		boolean result = false;
+		//パスワードが半角英数字のみか判断
+		result = userService.patternCheck(user.getPassword());
+		if (bindingResult.hasErrors() && result == false) {
 			//エラーがある場合の処理
+			mav.addObject("errorMassage", "パスワードは半角英数字で入力してください");
 			return getUserNew(user, mav);
-		}else {
-			//ユーザー情報の保存実行
-			user.setRole("ROLE_GENERAL");           //管理者は手動で生成すること
-			//パスワードの暗号化
-			String password = passwordEncoder.encode(user.getPassword());
-			user.setPassword(password);
-			uRepository.saveAndFlush(user);
-			System.out.println("ユーザー情報の登録が完了 user:" + user);
-			return new ModelAndView("redirect:/login");
+		}else if (bindingResult.hasErrors()) {
+			return getUserNew(user, mav);
+		}else if (result == false) {
+			mav.addObject("errorMassage", "パスワードは半角英数字で入力してください");
+			return getUserNew(user, mav);
 		}
+		//ユーザー情報の保存実行
+		user.setRole("ROLE_GENERAL");           //管理者は手動で生成すること
+		//パスワードの暗号化
+		String password = passwordEncoder.encode(user.getPassword());
+		user.setPassword(password);
+		uRepository.saveAndFlush(user);
+		System.out.println("ユーザー情報の登録が完了 user:" + user);
+		return new ModelAndView("redirect:/login");
+		
 	}
 	
 	@RequestMapping(value = "/userShow", method = RequestMethod.GET)

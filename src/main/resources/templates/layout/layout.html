@@ -63,7 +63,7 @@
 			<div class="list-group  col-md-2 col-lg-2 sidebar">
 				<h3>カテゴリ</h3>
 				<div th:each="categoryItem : ${categoryItems}">
-					<a th:href="@{/#}" class="list-group-item" th:text="${categoryItem}">カテゴリー名</a> 
+					<a th:href="@{'/category'(id = ${categoryItem.key})}" class="list-group-item" th:text="${categoryItem.value}">カテゴリー名</a> 
 				</div>
 			</div>
 

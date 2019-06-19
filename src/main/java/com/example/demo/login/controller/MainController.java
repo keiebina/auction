@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.login.domain.model.Product;
-import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.jdbc.UserRepository;
 import com.example.demo.login.domain.service.DataAccessService;
 import com.example.demo.login.domain.service.ProductService;
@@ -37,8 +36,6 @@ public class MainController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getIndex(ModelAndView mav, Principal principal) {
-		List<User> users = userRepository.findAll();
-		System.out.println(users);
 		pService.changeStatusFlag(); 		//終了時間が過ぎた商品があった場合、落札情報の更新
 		String userId = null;
 		mav.addObject("in", false);

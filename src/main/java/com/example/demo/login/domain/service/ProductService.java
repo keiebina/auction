@@ -3,7 +3,9 @@ package com.example.demo.login.domain.service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,22 +44,40 @@ public class ProductService {
 	}
 		
 	//category用
-		public List<String> getCategoryItems(){
-			List<String> categoryItems = new ArrayList<String>();
-			categoryItems.add("コンピュータ");
-			categoryItems.add("家電、AV｜カメラ");
-			categoryItems.add("音楽｜CD");
-			categoryItems.add("本、雑誌｜漫画");
-			categoryItems.add("映画、ビデオ｜DVD");
-			categoryItems.add("おもちゃ｜ゲーム");
-			categoryItems.add("ホビー｜カルチャー");
-			categoryItems.add("アンティーク、コレクション");
-			categoryItems.add("スポーツ、レジャー");
-			categoryItems.add("ファッション｜ブランド別");
-			categoryItems.add("アクセサリー｜時計");
-			categoryItems.add("住まい、インテリア");
-			categoryItems.add("事務、店舗用品");
-			return categoryItems;
+//		public List<String> getCategoryItems(){
+//			List<String> categoryItems = new ArrayList<String>();
+//			categoryItems.add("コンピュータ");
+//			categoryItems.add("家電、AV｜カメラ");
+//			categoryItems.add("音楽｜CD");
+//			categoryItems.add("本、雑誌｜漫画");
+//			categoryItems.add("映画、ビデオ｜DVD");
+//			categoryItems.add("おもちゃ｜ゲーム");
+//			categoryItems.add("ホビー｜カルチャー");
+//			categoryItems.add("アンティーク、コレクション");
+//			categoryItems.add("スポーツ、レジャー");
+//			categoryItems.add("ファッション｜ブランド別");
+//			categoryItems.add("アクセサリー｜時計");
+//			categoryItems.add("住まい、インテリア");
+//			categoryItems.add("事務、店舗用品");
+//			return categoryItems;
+//	}
+		
+	public Map<Integer, String> getCategoryItems(){
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		map.put(0, "コンピュータ");
+		map.put(1, "家電、AV｜カメラ");
+		map.put(2, "音楽｜CD");
+		map.put(3, "本、雑誌｜漫画");
+		map.put(4, "映画、ビデオ｜DVD");
+		map.put(5, "おもちゃ｜ゲーム");
+		map.put(6, "ホビー｜カルチャー");
+		map.put(7, "アンティーク、コレクション");
+		map.put(8, "スポーツ、レジャー");
+		map.put(9, "ファッション｜ブランド別");
+		map.put(10, "アクセサリー｜時計");
+		map.put(11, "住まい、インテリア");
+		map.put(12, "事務、店舗用品");
+		return map;
 	}
 		
 //====================================================================================================

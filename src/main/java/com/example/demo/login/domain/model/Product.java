@@ -2,6 +2,7 @@ package com.example.demo.login.domain.model;
 
 
 import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,8 +21,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.Data;
-
 @Table(name = "products")
 @NamedQueries({
 	@NamedQuery(
@@ -38,7 +37,6 @@ import lombok.Data;
 			)
 })
 @Entity
-@Data
 public class Product {
 	
 	//商品（落札前）
@@ -90,4 +88,101 @@ public class Product {
 	@Transient                    																	//@Transientを使用するとテーブルに反映されない
 	private MultipartFile imageResource;
 
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public LocalDateTime getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(LocalDateTime startTime) {
+		this.startTime = startTime;
+	}
+
+	public LocalDateTime getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(LocalDateTime endTime) {
+		this.endTime = endTime;
+	}
+
+	public Integer getStartPrice() {
+		return startPrice;
+	}
+
+	public void setStartPrice(Integer startPrice) {
+		this.startPrice = startPrice;
+	}
+
+	public Integer getCurrentPrice() {
+		return currentPrice;
+	}
+
+	public void setCurrentPrice(Integer currentPrice) {
+		this.currentPrice = currentPrice;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public Integer getStatusFlag() {
+		return statusFlag;
+	}
+
+	public void setStatusFlag(Integer statusFlag) {
+		this.statusFlag = statusFlag;
+	}
+
+	public MultipartFile getImageResource() {
+		return imageResource;
+	}
+
+	public void setImageResource(MultipartFile imageResource) {
+		this.imageResource = imageResource;
+	}
+
+	
 }
