@@ -38,7 +38,7 @@ public class MainController {
 	
 	@Transactional(readOnly = false)
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView getIndex(ModelAndView mav, Principal principal) {
+	public ModelAndView getIndex( ModelAndView mav, Principal principal) {
 		pService.changeStatusFlag(); 		//終了時間が過ぎた商品があった場合、落札情報の更新
 		String userId = null;
 		mav.addObject("in", false);

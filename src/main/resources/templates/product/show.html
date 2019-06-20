@@ -52,6 +52,9 @@
 						</div>
 						<div th:if="${product.statusFlag} == 0">
 							<h4>この商品の出品は終了しました</h4>
+							<!-- ウォッチリスト追加・削除ボタン -->
+							<a  th:if="${watchListFlag} == false" class="btn btn-primary center-block " th:href="@{'/watchListUpdate'(id=*{productId})}" style="width:80%; margin-top:20px;">ウォッチリストに追加する</a>
+							<a  th:if="${watchListFlag} == true" class="btn btn-danger center-block " th:href="@{'/watchListUpdate'(id=*{productId})}" style="width:80%; margin-top:20px;">ウォッチリストから削除する</a>
 						</div>
 				</div>
 			</div>

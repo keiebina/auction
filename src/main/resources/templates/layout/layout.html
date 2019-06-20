@@ -44,10 +44,10 @@
 	<!-- 検索フォーム、リンクボタン -->
 	<div class="container-fluid menu">
 				<div class="row">
-					<form class="form-inline" method="get">
+					<form class="form-inline" method="get" th:action="@{/search}">
 						<div class="col-lg-5">
 							<input class="form-control " type="search" placeholder="Search"
-								aria-label="Search" style="width:100%">
+								aria-label="Search" style="width:100%" name="search" >
 						</div>
 						<button class="btn btn-outline-success col-lg-1" type="submit">Search</button>
 					</form>

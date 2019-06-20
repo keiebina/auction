@@ -16,6 +16,7 @@
 							<div class="caption">
 								<div >
 								</div>
+								<div th:text="'商 品 名  : ' + ${watchList.productName}"></div>
 								<div th:text="'現在価格 : ' + ${watchList.currentPrice} + ' 円'"></div>
 								<div th:text="'終了日時 : ' + ${#temporals.format(watchList.endTime, 'yyyy-MM-dd HH:mm')}"></div>
 								<p style="margin-bottom: 0px">
