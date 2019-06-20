@@ -16,4 +16,6 @@ public interface ProductDao<T> extends Serializable {
 	
 	public List<Product> getProductsByCategory(String category);
 	
+	public List<Product> findProductsBySearchWord(String searchWord);
+	
 }

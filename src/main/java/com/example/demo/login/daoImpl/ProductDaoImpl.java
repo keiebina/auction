@@ -66,4 +66,15 @@ public class ProductDaoImpl implements ProductDao<Product>{
 		em.close();
 		return list;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> findProductsBySearchWord(String searchWord) {
+		em = dataAccessService.setEntitymanager(em);
+		List<Product> list = (List<Product>)em
+					.createNamedQuery("findProductsBySearchWord")
+					.setParameter("searchWord", searchWord)
+					.getResultList();
+		em.close();
+		return list;
+	}
 }

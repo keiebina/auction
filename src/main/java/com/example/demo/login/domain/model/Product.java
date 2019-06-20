@@ -38,6 +38,10 @@ import org.springframework.web.multipart.MultipartFile;
 	@NamedQuery(
 			name = "getProductsByCategory",
 			query = "SELECT p FROM Product p WHERE p.statusFlag = 1 AND p.category = :category"
+			),
+	@NamedQuery(
+			name = "findProductsBySearchWord",
+			query = "SELECT p FROM Product p WHERE p.statusFlag = 1 AND p.productName like :searchWord OR p.category like :searchWord OR p.description like :searchWord"
 			)
 })
 @Entity

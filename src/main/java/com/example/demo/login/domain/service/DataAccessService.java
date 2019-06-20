@@ -63,10 +63,12 @@ public class DataAccessService {
 		return productDaoImpl.getProductByStatusFlag();								//出品中の商品情報全て取得
 	}
 	public List<Product> getProductsByCategory(String category){
-		return productDaoImpl.getProductsByCategory(category);					//出品中の商品をカテゴリーで検索1
+		return productDaoImpl.getProductsByCategory(category);					//出品中の商品をカテゴリーで検索
 	}
-	
-	
+	public List<Product> findProductsBySearchWord(String searchWord) {
+		System.out.println(searchWord);
+		return productDaoImpl.findProductsBySearchWord(searchWord);			//検索ワードで商品情報を取得
+	}
 	
 //==================================================================================================================
 //														bid
