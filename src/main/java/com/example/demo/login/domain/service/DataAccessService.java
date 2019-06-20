@@ -11,9 +11,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.login.daoImpl.BidDaoImpl;
+import com.example.demo.login.daoImpl.BidRankingDaoImpl;
 import com.example.demo.login.daoImpl.ProductDaoImpl;
 import com.example.demo.login.daoImpl.SuccessfulBidDaoImpl;
 import com.example.demo.login.daoImpl.WatchListDaoImpl;
+import com.example.demo.login.domain.model.BidRanking;
 import com.example.demo.login.domain.model.Product;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.WatchList;
@@ -35,6 +37,9 @@ public class DataAccessService {
 	
 	@Autowired
 	SuccessfulBidDaoImpl successfulBidDaoImpl;
+	
+	@Autowired
+	BidRankingDaoImpl bidRankingDaoImpl;
 	
 	public EntityManager setEntitymanager(EntityManager em) {
 		em = entityManager;
@@ -99,5 +104,13 @@ public class DataAccessService {
 
 	public List<Product> getProductsByUserId(String userId){
 		return successfulBidDaoImpl.getProductsByUserId(userId);				//ユーザーが落札した商品情報を全て取得
+	}
+
+//==================================================================================================================
+//														bidRanking
+//==================================================================================================================
+	
+	public List<BidRanking> findAllOrderByBidCount(){
+		return bidRankingDaoImpl.findAllOrderByBidCount();
 	}
 }

@@ -8,4 +8,5 @@ import com.example.demo.login.domain.model.Bid;
 @Repository
 public interface BidRepository extends JpaRepository<Bid, Integer> {
 	
+	public long countByProductProductId(Integer productId);
 }

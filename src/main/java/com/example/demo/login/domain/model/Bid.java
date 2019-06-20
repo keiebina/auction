@@ -22,11 +22,11 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery(
 			name = "getByProductIdOrderByBidPrice",
 			query = "SELECT b.user FROM Bid b WHERE b.product.id = :id ORDER BY b.bidPrice DESC"
-			),
-	@NamedQuery(
-			name = "getProductIdBy"
-			
 			)
+//	@NamedQuery(
+//			name = "countByProductProductId",
+//			query = ""
+//			)
 })
 
 @Entity

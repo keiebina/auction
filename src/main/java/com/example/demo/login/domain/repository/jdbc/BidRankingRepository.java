@@ -3,12 +3,9 @@ package com.example.demo.login.domain.repository.jdbc;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.login.domain.model.Product;
-
-
+import com.example.demo.login.domain.model.BidRanking;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer>{
+public interface BidRankingRepository extends JpaRepository<BidRanking, Integer>  {
 
-	public Product findByProductId(Integer productId); 
 }
