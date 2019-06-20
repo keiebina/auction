@@ -29,4 +29,22 @@ public class SearchResult {
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
+
+	public Integer getSearchResultId() {
+		return searchResultId;
+	}
+
+	public void setSearchResultId(Integer searchResultId) {
+		this.searchResultId = searchResultId;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
+	
 }

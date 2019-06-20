@@ -10,13 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.login.dao.SearchResultDao;
 import com.example.demo.login.daoImpl.BidDaoImpl;
 import com.example.demo.login.daoImpl.BidRankingDaoImpl;
 import com.example.demo.login.daoImpl.ProductDaoImpl;
+import com.example.demo.login.daoImpl.SearchResultDaoImpl;
 import com.example.demo.login.daoImpl.SuccessfulBidDaoImpl;
 import com.example.demo.login.daoImpl.WatchListDaoImpl;
 import com.example.demo.login.domain.model.BidRanking;
 import com.example.demo.login.domain.model.Product;
+import com.example.demo.login.domain.model.SearchResult;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.WatchList;
 
@@ -40,6 +43,9 @@ public class DataAccessService {
 	
 	@Autowired
 	BidRankingDaoImpl bidRankingDaoImpl;
+	
+	@Autowired
+	SearchResultDao<SearchResult> searchResultDao;
 	
 	public EntityManager setEntitymanager(EntityManager em) {
 		em = entityManager;
@@ -114,5 +120,13 @@ public class DataAccessService {
 	
 	public List<BidRanking> findAllOrderByBidCount(){
 		return bidRankingDaoImpl.findAllOrderByBidCount();
+	}
+	
+//==================================================================================================================
+//														SearchResult
+//==================================================================================================================
+
+	public List<Product> getAllSearchResult(){
+		return searchResultDao.getAllSearchResult();
 	}
 }
