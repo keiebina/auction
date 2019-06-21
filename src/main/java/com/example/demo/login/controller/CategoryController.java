@@ -1,6 +1,5 @@
 package com.example.demo.login.controller;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +24,7 @@ public class CategoryController {
 	DataAccessService daService;
 
 	@RequestMapping(value = "/category", method =  RequestMethod.GET)
-	public ModelAndView getCategory(@RequestParam("id") Integer categoryId, ModelAndView mav, Principal principal) {
-		String userId = principal.getName();
+	public ModelAndView getCategory(@RequestParam("id") Integer categoryId, ModelAndView mav) {
 		Map<Integer, String> map = pService.getCategoryItems();
 		String category = map.get(categoryId);
 		List<Product> products = daService.getProductsByCategory(category);
@@ -37,8 +35,6 @@ public class CategoryController {
 		mav.addObject("category", category);
 		mav.addObject("products", products);		//選択したカテゴリーの商品リスト
 		mav.addObject("productsSizeFlag", productsSizeFlag); //後で追加
-		mav.addObject("userId", userId);
-		mav.addObject("in", true);
 		mav.addObject("categoryItems", map);      //サイドバー表示アイテム
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "product/category :: category_contents");

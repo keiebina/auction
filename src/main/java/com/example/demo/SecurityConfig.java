@@ -46,10 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 				.antMatchers("/webjars/**").permitAll()    //webjarsへのアクセス許可
 				.antMatchers("/css").permitAll()               //cssへのアクセス許可
-				.antMatchers("/").permitAll()                   //トップページは直リンクOK
 				.antMatchers("/login").permitAll()             //ログインページは直リンクOK
 				.antMatchers("/userNew").permitAll()       //ユーザー登録画面は直リンクOK
 				.antMatchers("/userCreate").permitAll()       //ユーザー登録画面は直リンクOK
+				//ログインしなくてもトップ、検索、カテゴリー画面は見れるように設定
+				.antMatchers("/").permitAll()                   //トップページは直リンクOK
+				.antMatchers("/category**").permitAll()
+				.antMatchers("/search**").permitAll()
 				.antMatchers("/productNew").hasAuthority("ROLE_ADMIN")      //管理者以外は商品登録画面表示不可
 				.anyRequest().authenticated();                  //それ以外は直リンク禁止
 		

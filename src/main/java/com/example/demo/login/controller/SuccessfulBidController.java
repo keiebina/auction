@@ -34,11 +34,11 @@ public class SuccessfulBidController {
 		if (productList.size() > 0) {
 			successfulBidFlag = true;
 		}
+		long count = daService.countProductsByUserId(userId);
+		System.out.println(count);
 		mav.addObject("successfulBidFlag", successfulBidFlag);
 		mav.addObject("productList", productList);										//ログインユーザーが落札した商品一覧を格納
 		mav.addObject("categoryItems", pService.getCategoryItems());    	  	//サイドバー表示アイテム
-		mav.addObject("userId", userId);
-		mav.addObject("in", true);
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/successfulBid :: successfulBid_contents");
 		return mav;

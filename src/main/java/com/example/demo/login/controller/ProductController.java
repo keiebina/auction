@@ -139,9 +139,7 @@ public class ProductController {
 		mav.addObject("count", count); 							//入札数
 		mav.addObject("product", product);						//標品情報
 		mav.addObject("loginUser", loginUser);                  //ログインユーザー情報
-		mav.addObject("userId", userId);                           //ログインユーザーID
-		mav.addObject("in", true);                                   //ログイン状態
-		mav.setViewName("layout/offSidebar");
+		mav.setViewName("layout/productLayout");
 		mav.addObject("contents", "product/show :: show_contents");	
 		return mav;
 	}

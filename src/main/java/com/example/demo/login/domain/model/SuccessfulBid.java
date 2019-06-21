@@ -16,6 +16,10 @@ import javax.persistence.Table;
 	@NamedQuery(
 			name = "getProductsByUserId",
 			query = "SELECT sb.product FROM SuccessfulBid sb WHERE sb.user.id = :id "
+			),
+	@NamedQuery(
+			name = "countProductsByUserId",
+			query = "SELECT count(sb) FROM SuccessfulBid sb WHERE sb.user.id = :id"
 			)
 })
 

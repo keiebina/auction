@@ -53,8 +53,6 @@ public class WatchListController {
 		mav.addObject("watchListFlag",watchListFlag);
 		mav.addObject("watchLists", watchList);
 		mav.addObject("categoryItems", pService.getCategoryItems());      //サイドバー表示アイテム
-		mav.addObject("userId", userId);
-		mav.addObject("in", true);
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/watchList :: watchList_contents");
 		return mav;

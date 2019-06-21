@@ -95,8 +95,6 @@ public class UserController {
 		String userId = principal.getName();
 		User loginUser = uRepository.findByUserId(userId);
 		mav.addObject("loginUser", loginUser);
-		mav.addObject("userId", userId);
-		mav.addObject("in", true);
 		mav.addObject("categoryItems", productService.getCategoryItems());      //サイドバー表示アイテム
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/show :: show_contents");
@@ -108,8 +106,6 @@ public class UserController {
 		String userId = principal.getName();
 		User loginUser = uRepository.findByUserId(userId);
 		mav.addObject("loginUser", loginUser);
-		mav.addObject("userId", userId);
-		mav.addObject("in", true);
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/edit :: edit_contents");
 		return mav;

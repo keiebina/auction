@@ -10,16 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.login.dao.BidDao;
+import com.example.demo.login.dao.BidRankingDao;
+import com.example.demo.login.dao.ProductDao;
 import com.example.demo.login.dao.SearchResultDao;
-import com.example.demo.login.daoImpl.BidDaoImpl;
-import com.example.demo.login.daoImpl.BidRankingDaoImpl;
-import com.example.demo.login.daoImpl.ProductDaoImpl;
-import com.example.demo.login.daoImpl.SearchResultDaoImpl;
-import com.example.demo.login.daoImpl.SuccessfulBidDaoImpl;
-import com.example.demo.login.daoImpl.WatchListDaoImpl;
+import com.example.demo.login.dao.SuccessfulBidDao;
+import com.example.demo.login.dao.WatchListDao;
+import com.example.demo.login.domain.model.Bid;
 import com.example.demo.login.domain.model.BidRanking;
 import com.example.demo.login.domain.model.Product;
 import com.example.demo.login.domain.model.SearchResult;
+import com.example.demo.login.domain.model.SuccessfulBid;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.WatchList;
 
@@ -30,19 +31,19 @@ public class DataAccessService {
 	EntityManager entityManager;
 	
 	@Autowired
-	ProductDaoImpl productDaoImpl;
+	ProductDao<Product> productDao;
 	
 	@Autowired
-	BidDaoImpl bidDaoimpl;
+	BidDao<Bid> bidDao;
 	
 	@Autowired
-	WatchListDaoImpl watchListDaoImpl;
+	WatchListDao<WatchList> watchListDao;
 	
 	@Autowired
-	SuccessfulBidDaoImpl successfulBidDaoImpl;
+	SuccessfulBidDao<SuccessfulBid> successfulBidDao;
 	
 	@Autowired
-	BidRankingDaoImpl bidRankingDaoImpl;
+	BidRankingDao<BidRanking> bidRankingDao;
 	
 	@Autowired
 	SearchResultDao<SearchResult> searchResultDao;
@@ -59,21 +60,21 @@ public class DataAccessService {
 //==================================================================================================================
 	
 	public List<Product> getCommingSoon(LocalDateTime now){					//indexページで表示する終了間近商品３件を取得
-		return productDaoImpl.getCommingSoon(now);
+		return productDao.getCommingSoon(now);
 	}
 	
 	public Product findByProductId(Integer productId) {									//商品IDから商品情報全て取得
-		return productDaoImpl.findByProductId(productId);
+		return productDao.findByProductId(productId);
 	}
 	public List<Product> getProductByStatusFlag(){
-		return productDaoImpl.getProductByStatusFlag();								//出品中の商品情報全て取得
+		return productDao.getProductByStatusFlag();								//出品中の商品情報全て取得
 	}
 	public List<Product> getProductsByCategory(String category){
-		return productDaoImpl.getProductsByCategory(category);					//出品中の商品をカテゴリーで検索
+		return productDao.getProductsByCategory(category);					//出品中の商品をカテゴリーで検索
 	}
 	public List<Product> findProductsBySearchWord(String searchWord) {
 		System.out.println(searchWord);
-		return productDaoImpl.findProductsBySearchWord(searchWord);			//検索ワードで商品情報を取得
+		return productDao.findProductsBySearchWord(searchWord);			//検索ワードで商品情報を取得
 	}
 	
 //==================================================================================================================
@@ -81,11 +82,11 @@ public class DataAccessService {
 //==================================================================================================================
 
 	public long countByProductId(int productId) {												//商品IDから商品の入札数を数える
-		return bidDaoimpl.countByProductId(productId);					
+		return bidDao.countByProductId(productId);					
 	}
 	public User getByProductIdOrderByBidPrice(int productId) {							//商品IDから一番入札価格が大きいユーザーを取得
 		try {
-			return bidDaoimpl.getByProductIdOrderByBidPrice(productId);
+			return bidDao.getByProductIdOrderByBidPrice(productId);
 		} catch (DataAccessException e) {
 			// 入札数が０の場合に起こる
 		}
@@ -97,13 +98,13 @@ public class DataAccessService {
 //==================================================================================================================
 	
 	public boolean checkWatchList(String userId, Integer productId) {									//ユーザーIDと商品IDが一致している商品があるか判断
-		return watchListDaoImpl.checkWatchList(userId, productId);
+		return watchListDao.checkWatchList(userId, productId);
 	}
 	public Integer getWatchListIdByUserIdAndProductId(String userId, Integer productId) {		//ユーザーIDと商品IDが一致しているウォッチリストIDを取得
-		return watchListDaoImpl.getWatchListIdByUserIdAndProductId(userId, productId);
+		return watchListDao.getWatchListIdByUserIdAndProductId(userId, productId);
 	}
 	public List<WatchList> getWatchListByUserId(String userId){										//ユーザーIDからウォッチリスト情報全て取得
-		return watchListDaoImpl.getWatchListByUserId(userId);
+		return watchListDao.getWatchListByUserId(userId);
 	}
 	
 //==================================================================================================================
@@ -111,7 +112,7 @@ public class DataAccessService {
 //==================================================================================================================
 
 	public List<Product> getProductsByUserId(String userId){
-		return successfulBidDaoImpl.getProductsByUserId(userId);				//ユーザーが落札した商品情報を全て取得
+		return successfulBidDao.getProductsByUserId(userId);				//ユーザーが落札した商品情報を全て取得
 	}
 
 //==================================================================================================================
@@ -119,7 +120,7 @@ public class DataAccessService {
 //==================================================================================================================
 	
 	public List<BidRanking> findAllOrderByBidCount(){
-		return bidRankingDaoImpl.findAllOrderByBidCount();
+		return bidRankingDao.findAllOrderByBidCount();
 	}
 	
 //==================================================================================================================
@@ -128,5 +129,13 @@ public class DataAccessService {
 
 	public List<Product> getAllSearchResult(){
 		return searchResultDao.getAllSearchResult();
+	}
+	
+//==================================================================================================================
+//														ページネーション用
+//==================================================================================================================
+	
+	public long countProductsByUserId(String userId) {
+		return successfulBidDao.countProductsByUserId(userId);				//ログインユーザー落札商品カウント
 	}
 }

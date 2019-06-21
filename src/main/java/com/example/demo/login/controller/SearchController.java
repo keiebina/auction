@@ -1,6 +1,5 @@
 package com.example.demo.login.controller;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +31,7 @@ public class SearchController {
 
 	@Transactional(readOnly = false)
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView getSearch(@RequestParam("search") String searchWord, ModelAndView mav, Principal principal) {
-		String userId = principal.getName();													//ナビゲーションバー表示用
+	public ModelAndView getSearch(@RequestParam("search") String searchWord, ModelAndView mav) {
 		srRepository.deleteAll();																	//テーブル全削除
 		String[] word = searchWord.split("[ ,　]");											//半角・全角スペースで文字列をわける
 		if (searchWord.equals("")) {
@@ -58,8 +56,6 @@ public class SearchController {
 			searchResultFlag = true;
 		}
 		mav.addObject("searchResultFlag", searchResultFlag);
-		mav.addObject("userId", userId);
-		mav.addObject("in", true);
 		mav.addObject("products", products);
 		mav.addObject("categoryItems", pService.getCategoryItems());			//サイドバー表示アイテム
 		mav.setViewName("layout/layout");

@@ -32,6 +32,17 @@ public class SuccessfulBidDaoImpl implements SuccessfulBidDao<SuccessfulBid> {
 		em.close();
 		return list;
 	}
+
+	@Override
+	public long countProductsByUserId(String userId) {
+		em = daService.setEntitymanager(em);
+		long count = (long)em
+					.createNamedQuery("countProductsByUserId")
+					.setParameter("id", userId)
+					.getSingleResult();
+		em.close();
+		return count;
+	}
 	
 
 }

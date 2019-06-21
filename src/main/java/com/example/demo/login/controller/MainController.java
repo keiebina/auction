@@ -1,6 +1,5 @@
 package com.example.demo.login.controller;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,17 +37,8 @@ public class MainController {
 	
 	@Transactional(readOnly = false)
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView getIndex( ModelAndView mav, Principal principal) {
+	public ModelAndView getIndex( ModelAndView mav) {
 		pService.changeStatusFlag(); 		//終了時間が過ぎた商品があった場合、落札情報の更新
-		String userId = null;
-		mav.addObject("in", false);
-		try {
-			userId = principal.getName();
-		}catch (Exception e) { }
-		if (userId != null) {
-			mav.addObject("userId", userId);
-			mav.addObject("in", true);
-		}
 		//終了間近商品の取得
 		boolean commingSoonFlag = false;
 		try {
