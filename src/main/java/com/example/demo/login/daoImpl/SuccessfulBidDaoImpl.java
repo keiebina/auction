@@ -23,11 +23,13 @@ public class SuccessfulBidDaoImpl implements SuccessfulBidDao<SuccessfulBid> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> getProductsByUserId(String userId) {
+	public List<Product> getProductsByUserId(String userId, int page) {
 		em = daService.setEntitymanager(em);
 		List<Product> list = (List<Product>)em
 					.createNamedQuery("getProductsByUserId")
 					.setParameter("id", userId)
+					.setFirstResult(6 * (page - 1))
+					.setMaxResults(6)
 					.getResultList();
 		em.close();
 		return list;

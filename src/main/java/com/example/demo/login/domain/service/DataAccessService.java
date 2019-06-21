@@ -111,8 +111,8 @@ public class DataAccessService {
 //														successfulBid
 //==================================================================================================================
 
-	public List<Product> getProductsByUserId(String userId){
-		return successfulBidDao.getProductsByUserId(userId);				//ユーザーが落札した商品情報を全て取得
+	public List<Product> getProductsByUserId(String userId, int page){
+		return successfulBidDao.getProductsByUserId(userId, page);				//ユーザーが落札した商品情報を全て取得
 	}
 
 //==================================================================================================================

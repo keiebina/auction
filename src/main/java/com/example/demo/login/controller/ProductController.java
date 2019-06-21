@@ -52,7 +52,6 @@ public class ProductController {
 	
 	@RequestMapping(value = "/productNew", method = RequestMethod.GET)
 	public ModelAndView getProductNew(@ModelAttribute  Product product, ModelAndView mav) {
-		System.out.println(mav);
 		mav.setViewName("form/productForm");
 		mav.addObject("stateItems", pService.getStateItems());              //セレクトボックスのリストを格納
 		mav.addObject("categoryItems", pService.getCategoryItems());    //セレクトボックスのリストを格納

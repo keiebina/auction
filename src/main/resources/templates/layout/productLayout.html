@@ -52,8 +52,8 @@
 						<button class="btn btn-outline-success col-lg-1" type="submit">Search</button>
 					</form>
 					<a th:if="! ${#authentication.name.equals('anonymousUser')}" class="btn btn-link col-lg-2" th:href="@{/userShow}">マイページ</a> <a
-						th:if="! ${#authentication.name.equals('anonymousUser')}" class="btn btn-link col-lg-2" th:href="@{/watchListShow}">ウォッチリスト</a> <a
-						th:if="! ${#authentication.name.equals('anonymousUser')}" class="btn btn-link col-lg-2" th:href="@{/successfulBid}">落札済みリスト</a>
+						th:if="! ${#authentication.name.equals('anonymousUser')}" class="btn btn-link col-lg-2" th:href="@{'/watchListShow'(page = 1)}">ウォッチリスト</a> <a
+						th:if="! ${#authentication.name.equals('anonymousUser')}" class="btn btn-link col-lg-2" th:href="@{'/successfulBid'(page = 1)}">落札済みリスト</a>
 				</div>
 			</div>
 
