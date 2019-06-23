@@ -19,7 +19,7 @@ import javax.persistence.Table;
 				),
 		@NamedQuery(
 				name = "countAllSearchResult",
-				query = "SELECT count(sr.product) FROM SearchResult sr GROUP BY sr.product ORDER BY count(sr) DESC"
+				query = "SELECT count(DISTINCT sr.product) FROM SearchResult sr"
 				)
 	})
 @Entity

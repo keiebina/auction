@@ -38,7 +38,7 @@
                     <label class="col-md-2 control-label">カテゴリ</label>
                     <div class="col-sm-5">
                     	<select name="category" th:field="*{category}">
-                      	  <option th:each="category : ${categoryItems}" th:text="${category.value}" th:value="${category}">category</option>
+                      	  <option th:each="category : ${categoryItems}" th:text="${category.value}" th:value="${category.value}">category</option>
                     	</select>
                         <span class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">category error</span>
                     </div>

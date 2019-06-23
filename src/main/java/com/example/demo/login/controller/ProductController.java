@@ -64,7 +64,6 @@ public class ProductController {
 		boolean isAfter = false;
 		if (product.getEndTime() != null) {
 			isAfter = pService.checkNowIsAfterEndTime(product.getEndTime());
-			System.out.println(isAfter);
 		}
 		if (bindingResult.hasErrors() && isAfter) {
 			//エラーがある場合の処理

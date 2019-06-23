@@ -40,7 +40,7 @@ public class SearchResultDaoImpl implements SearchResultDao<SearchResult> {
 		em = daService.setEntitymanager(em);
 		long count = (long)em
 					.createNamedQuery("countAllSearchResult")
-					.getFirstResult();
+					.getSingleResult();
 		em.close();
 		return count;
 	}

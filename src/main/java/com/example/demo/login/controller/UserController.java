@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -53,6 +55,9 @@ public class UserController {
 	@Autowired
 	DataAccessService dataService;
 	
+	@Autowired
+	HttpSession session;
+	
 	@RequestMapping(value = "/userNew", method = RequestMethod.GET)
 	public ModelAndView getUserNew(@ModelAttribute User user, ModelAndView mav) {
 		//ラジオボタンの初期化メソッドの呼び出し、画面表示用に格納
@@ -65,6 +70,12 @@ public class UserController {
 	@RequestMapping(value = "/userCreate", method = RequestMethod.POST)
 	@Transactional(readOnly = false)
 	public ModelAndView postUserCreate(@ModelAttribute @Validated User user,BindingResult bindingResult, ModelAndView mav) {
+		//メールアドレスの重複チェック
+		long count = dataService.countByUserId(user.getUserId());
+		if (count > 0) {
+			mav.addObject("errorMassage", "入力したユーザーIDは既に使用されています");
+			return getUserNew(user, mav);
+		}
 		boolean result = false;
 		//パスワードが半角英数字のみか判断
 		result = userService.patternCheck(user.getPassword());
@@ -79,10 +90,15 @@ public class UserController {
 			return getUserNew(user, mav);
 		}
 		//ユーザー情報の保存実行
-		user.setRole("ROLE_GENERAL");           //管理者は手動で生成すること
+		user.setRole("ROLE_GENERAL");           
+		//ユーザー登録一人目の場合は管理者とする
+		if (uRepository.findAll().size() == 0) {
+			user.setRole("ROLE_ADMIN");
+		}
 		//パスワードの暗号化
 		String password = passwordEncoder.encode(user.getPassword());
 		user.setPassword(password);
+		System.out.println(user);
 		uRepository.saveAndFlush(user);
 		System.out.println("ユーザー情報の登録が完了 user:" + user);
 		return new ModelAndView("redirect:/login");
@@ -104,8 +120,9 @@ public class UserController {
 	@RequestMapping(value = "/userEdit", method = RequestMethod.GET)
 	public ModelAndView getUserEdit(@ModelAttribute User user, ModelAndView mav, Principal principal) {
 		String userId = principal.getName();
-		User loginUser = uRepository.findByUserId(userId);
-		mav.addObject("loginUser", loginUser);
+		user = uRepository.findByUserId(userId);
+		mav.addObject("categoryItems", productService.getCategoryItems());      //サイドバー表示アイテム
+		mav.addObject("user", user);
 		mav.setViewName("layout/layout");
 		mav.addObject("contents", "user/edit :: edit_contents");
 		return mav;
@@ -117,12 +134,14 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			//エラーがある場合の処理
 			System.out.println("エラーがあります");
+			mav.addObject("categoryItems", productService.getCategoryItems());      //サイドバー表示アイテム
 			return getUserEdit(user, mav, principal);
 		}
 		String userId = principal.getName();
 		String password = user.getPassword();
 		if (userService.passwordCheck(userId, password) == false) {      //パスワードの一致チェック
 			System.out.println("パスワードが一致しません");
+			mav.addObject("categoryItems", productService.getCategoryItems());      //サイドバー表示アイテム
 			return getUserEdit(user, mav, principal);
 		}
 		password = passwordEncoder.encode(password);
@@ -130,11 +149,22 @@ public class UserController {
 		uRepository.saveAndFlush(user);
 		return new ModelAndView("redirect:/userShow");
 	}
-	
-	@RequestMapping(value = "/userDestroy", method = RequestMethod.POST)
-	public ModelAndView postUserDestroy(ModelAndView mav) {
+		
+	@RequestMapping(value = "/userDestroy",  method = RequestMethod.GET)
+	public ModelAndView getUserDestroy(ModelAndView mav) {
+		mav.addObject("categoryItems", productService.getCategoryItems());      //サイドバー表示アイテム
 		mav.setViewName("layout/layout");
+		mav.addObject("contents", "user/destroy :: destroy_contents");
 		return mav;
 	}
+	
+	@RequestMapping(value = "userDestroy", method = RequestMethod.POST)
+	public ModelAndView postUserDestroy(ModelAndView mav, Principal principal) {
+		String userId = principal.getName();
+		User loginUser = uRepository.findByUserId(userId);
+		uRepository.delete(loginUser);
+		session.invalidate();								//セッション情報の削除
+		return new ModelAndView("redirect:/");
+ 	}
 
 }

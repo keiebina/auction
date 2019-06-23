@@ -15,6 +15,7 @@ import com.example.demo.login.dao.BidRankingDao;
 import com.example.demo.login.dao.ProductDao;
 import com.example.demo.login.dao.SearchResultDao;
 import com.example.demo.login.dao.SuccessfulBidDao;
+import com.example.demo.login.dao.UserDao;
 import com.example.demo.login.dao.WatchListDao;
 import com.example.demo.login.domain.model.Bid;
 import com.example.demo.login.domain.model.BidRanking;
@@ -29,6 +30,9 @@ public class DataAccessService {
 	
 	@PersistenceContext
 	EntityManager entityManager;
+	
+	@Autowired
+	UserDao<User> userDao;
 	
 	@Autowired
 	ProductDao<Product> productDao;
@@ -48,12 +52,20 @@ public class DataAccessService {
 	@Autowired
 	SearchResultDao<SearchResult> searchResultDao;
 	
+	//@PersistenceContextは一か所のみの為、これを各daoImplで呼び出す
 	public EntityManager setEntitymanager(EntityManager em) {
 		em = entityManager;
 		return em;
 	}
 	
+
+//==================================================================================================================
+//														user
+//==================================================================================================================
 	
+	public long countByUserId(String userId) {
+		return userDao.countByUserId(userId);
+	}
 	
 //==================================================================================================================
 //														product

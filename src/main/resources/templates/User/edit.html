@@ -11,58 +11,66 @@
 			<h3>登録情報</h3>
 			<div class="row">
 				<div class="col-lg-6">
-					<form method="post" th:action="@{/userUpdate}" th:object="${loginUser}">
-						<table class="table table-bordered">
-							<tr>
-								<th class="col-lg-4 active">ユーザーID</th>
-								<td>
-									<input type="text" name="userId" class="form-control" th:field="*{userId}" readonly="readonly"> 
-								</td>
-							</tr>
-							<tr>
-								<th class="active">ニックネーム</th>
-								<td >
-									<input type="text" name="nickname" class="form-control" th:field="*{nickname}"> 
-								</td>
-							</tr>
-							<tr>
-								<th class="active">氏名</th>
-								<td>
-									<input type="text" name="userName" class="form-control" th:field="*{userName}"> 
-								</td>
-							</tr>
-							<tr>
-								<th class="active">生年月日</th>
-								<td>
-									<input type="text" name="birthday" class="form-control" th:field="*{birthday}"> 
-								</td>
-							</tr>
-							<tr>
-								<th class="active">郵便番号</th>
-								<td>
-									<input type="text" name="postalCode" class="form-control" th:field="*{postalCode}"> 
-								</td>
-							</tr>
-							<tr>
-								<th class="active">住所</th>
-								<td>
-									<input type="text" name="address" class="form-control" th:field="*{address}"> 
-								</td>
-							</tr>
-						</table>
-						<b>パスワード確認</b>
-						<table class="table table-bordered" >
-							<tr>
-								<th class="col-lg-4 active">パスワード</th>
-								<td>
-									<input type="text" name="password" class="form-control"  placeholder="パスワードは必ず入力してください"> 
-								</td>
-							</tr>
-						</table>
+					<form class="form-horizontal" method="post" th:action="@{/userUpdate}" th:object="${user}">
+					  	<!-- userId -->
+		                <div class="form-group" th:classappend="${#fields.hasErrors('userId')} ? 'has-error' ">
+		                    <label class="col-md-4 control-label">ユーザーID</label>
+		                    <div class="col-sm-8">
+		                        <input type="text" name="userId" class="form-control" th:field="*{userId}" readonly="readonly"> 
+		                    </div>
+		                </div>
+		                <!-- nickname -->
+		                <div class="form-group" th:classappend="${#fields.hasErrors('nickname')} ? 'has-error' ">
+		                    <label class="col-md-4 control-label">ニックネーム</label>
+		                    <div class="col-sm-8">
+		                        <input type="text" name="nickname" class="form-control" th:field="*{nickname}"> 
+		                        <span class="text-danger" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">nickname error</span>
+		                    </div>
+		                </div>
+		                <!-- userName -->
+		                <div class="form-group" th:classappend="${#fields.hasErrors('userName')} ? 'has-error' ">
+		                    <label class="col-md-4 control-label">ユーザーネーム</label>
+		                    <div class="col-sm-8">
+		                        <input type="text" name="userName" class="form-control" th:field="*{userName}"> 
+		                        <span class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">userName error</span>
+		                    </div>
+		                </div>
+		                <!-- birthday -->
+		                <div class="form-group" th:classappend="${#fields.hasErrors('birthday')} ? 'has-error' ">
+		                    <label class="col-md-4 control-label">生年月日</label>
+		                    <div class="col-sm-8">
+		                        <input type="text" name="birthday" class="form-control" th:field="*{birthday}"> 
+		                        <span class="text-danger" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">birthday error</span>
+		                    </div>
+		                </div>
+		                <!-- postalCode -->
+		                <div class="form-group" th:classappend="${#fields.hasErrors('postalCode')} ? 'has-error' ">
+		                    <label class="col-md-4 control-label">郵便番号</label>
+		                    <div class="col-sm-8">
+		                        <input type="text" name="postalCode" class="form-control" th:field="*{postalCode}"> 
+		                        <span class="text-danger" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}">postalCode error</span>
+		                    </div>
+		                </div>
+		                <!-- address -->
+		                <div class="form-group" th:classappend="${#fields.hasErrors('address')} ? 'has-error' ">
+		                    <label class="col-md-4 control-label">郵便番号</label>
+		                    <div class="col-sm-8">
+		                        <input type="text" name="address" class="form-control" th:field="*{address}"> 
+		                        <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">address error</span>
+		                    </div>
+		                </div>
+		                <!-- password -->
+		                <div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error' ">
+		                    <label class="col-md-4 control-label">パスワード確認</label>
+		                    <div class="col-sm-8">
+		                        <input type="text" name="password" class="form-control"  placeholder="パスワードを入力してください"> 
+		                        <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span>
+		                    </div>
+		                </div>
+		                
 						<input type="hidden" name="gender" class="form-control" th:field="*{gender}"> 
 						<input type="hidden" name="role" class="form-control" th:field="*{role}"> 
 						<button type="submit" class="btn btn-primary" name="update">登録情報を変更する</button>
-						<button type="submit" class="btn btn-danger" name="delete">登録情報を削除する</button>
 					</form>
 				</div>
 			</div>

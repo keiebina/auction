@@ -44,7 +44,9 @@ public class MainController {
 		try {
 			LocalDateTime now = LocalDateTime.now();
 			List<Product> products = daService.getCommingSoon(now);
-			commingSoonFlag = true;
+			if (products.size() > 0) {
+				commingSoonFlag = true;
+			}
 			mav.addObject("products", products);
 		} catch (Exception e) {
 			// TODO: handle exception

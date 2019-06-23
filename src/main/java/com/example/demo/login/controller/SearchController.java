@@ -56,6 +56,7 @@ public class SearchController {
 		List<Product> products = daService.getAllSearchResult(page);
 		long count = daService.countAllSearchResult();
 		List<Integer> pages = paginationService.pagination(count);
+		System.out.println(count);
 		boolean searchResultFlag = false;
 		
 		if (products.size() > 0) {
