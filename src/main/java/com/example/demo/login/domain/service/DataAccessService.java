@@ -69,8 +69,8 @@ public class DataAccessService {
 	public List<Product> getProductByStatusFlag(){
 		return productDao.getProductByStatusFlag();								//出品中の商品情報全て取得
 	}
-	public List<Product> getProductsByCategory(String category){
-		return productDao.getProductsByCategory(category);					//出品中の商品をカテゴリーで検索
+	public List<Product> getProductsByCategory(String category, int page){
+		return productDao.getProductsByCategory(category, page);					//出品中の商品をカテゴリーで検索
 	}
 	public List<Product> findProductsBySearchWord(String searchWord) {
 		System.out.println(searchWord);
@@ -103,8 +103,8 @@ public class DataAccessService {
 	public Integer getWatchListIdByUserIdAndProductId(String userId, Integer productId) {		//ユーザーIDと商品IDが一致しているウォッチリストIDを取得
 		return watchListDao.getWatchListIdByUserIdAndProductId(userId, productId);
 	}
-	public List<WatchList> getWatchListByUserId(String userId){										//ユーザーIDからウォッチリスト情報全て取得
-		return watchListDao.getWatchListByUserId(userId);
+	public List<WatchList> getWatchListByUserId(String userId, int page){										//ユーザーIDからウォッチリスト情報全て取得
+		return watchListDao.getWatchListByUserId(userId, page);
 	}
 	
 //==================================================================================================================
@@ -127,8 +127,8 @@ public class DataAccessService {
 //														SearchResult
 //==================================================================================================================
 
-	public List<Product> getAllSearchResult(){
-		return searchResultDao.getAllSearchResult();
+	public List<Product> getAllSearchResult(int page){
+		return searchResultDao.getAllSearchResult(page);
 	}
 	
 //==================================================================================================================
@@ -137,5 +137,17 @@ public class DataAccessService {
 	
 	public long countProductsByUserId(String userId) {
 		return successfulBidDao.countProductsByUserId(userId);				//ログインユーザー落札商品カウント
+	}
+	
+	public long countAllWatchListByUserId(String userId) {
+		return watchListDao.countAllWatchListByUserId(userId);				//ログインユーザーウォッチリストのカウント
+	}
+	
+	public long countProductsByCategory(String category) {
+		return productDao.countProductsByCategory(category);				//選択したカテゴリー商品カウント
+	}
+	
+	public long countAllSearchResult() {
+		return searchResultDao.countAllSearchResult();						//検索ワードにかかった商品カウント
 	}
 }

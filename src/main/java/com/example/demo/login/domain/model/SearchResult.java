@@ -16,6 +16,10 @@ import javax.persistence.Table;
 		@NamedQuery(
 				name = "getAllSearchResult",
 				query = "SELECT sr.product FROM SearchResult sr GROUP BY sr.product ORDER BY count(sr) DESC"
+				),
+		@NamedQuery(
+				name = "countAllSearchResult",
+				query = "SELECT count(sr.product) FROM SearchResult sr GROUP BY sr.product ORDER BY count(sr) DESC"
 				)
 	})
 @Entity

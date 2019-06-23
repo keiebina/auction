@@ -14,8 +14,10 @@ public interface ProductDao<T> extends Serializable {
 	
 	public List<Product> getProductByStatusFlag();
 	
-	public List<Product> getProductsByCategory(String category);
+	public List<Product> getProductsByCategory(String category, int page);
 	
 	public List<Product> findProductsBySearchWord(String searchWord);
+	
+	public long countProductsByCategory(String category);
 	
 }

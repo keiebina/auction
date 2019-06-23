@@ -17,6 +17,7 @@ import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.model.WatchList;
 import com.example.demo.login.domain.repository.jdbc.WatchListRepository;
 import com.example.demo.login.domain.service.DataAccessService;
+import com.example.demo.login.domain.service.PaginationService;
 import com.example.demo.login.domain.service.ProductService;
 import com.example.demo.login.domain.service.UserService;
 
@@ -35,10 +36,13 @@ public class WatchListController {
 	@Autowired
 	WatchListRepository wlRepository;
 	
+	@Autowired
+	PaginationService paginationService;
+	
 	@RequestMapping(value = "/watchListShow", method = RequestMethod.GET)
-	public ModelAndView getWatchListShow(ModelAndView mav, Principal principal) {
+	public ModelAndView getWatchListShow(@RequestParam(name = "page", defaultValue = "1") int page, ModelAndView mav, Principal principal) {
 		String userId = principal.getName();
-		List<WatchList> allWatchTable = daService.getWatchListByUserId(userId); 			//ログインユーザーの全ウォッチリストの取得
+		List<WatchList> allWatchTable = daService.getWatchListByUserId(userId,page); 			//ログインユーザーの全ウォッチリストの取得
 		//ウォッチリストからproduct情報のみを格納
 		List<Product> watchList = new ArrayList<>();			//格納用のリスト作成
 		Product product = new Product();							//for内で回すproductの作成
@@ -50,6 +54,10 @@ public class WatchListController {
 		if (watchList.size() > 0) {
 			watchListFlag = true;
 		}
+		long count = daService.countAllWatchListByUserId(userId);
+		List<Integer> pages = paginationService.pagination(count);
+		mav.addObject("pages", pages);
+		mav.addObject("count", count);
 		mav.addObject("watchListFlag",watchListFlag);
 		mav.addObject("watchLists", watchList);
 		mav.addObject("categoryItems", pService.getCategoryItems());      //サイドバー表示アイテム

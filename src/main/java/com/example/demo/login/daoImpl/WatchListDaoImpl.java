@@ -48,14 +48,26 @@ public class WatchListDaoImpl implements WatchListDao<WatchList> {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<WatchList> getWatchListByUserId(String userId) {
+	public List<WatchList> getWatchListByUserId(String userId, int page) {
 		em = dataAccessService.setEntitymanager(em);
 		List<WatchList> watchList = (List<WatchList>)em
 				.createNamedQuery("getWatchListByUserId")
 				.setParameter("userId", userId)
+				.setFirstResult(6 * (page - 1))
+				.setMaxResults(6)
 				.getResultList();
 		em.close();
 		return watchList;
+	}
+	@Override
+	public long countAllWatchListByUserId(String userId) {
+		em = dataAccessService.setEntitymanager(em);
+		long count = (long)em
+					.createNamedQuery("countAllWatchListByUserId")
+					.setParameter("userId", userId)
+					.getSingleResult();
+		em.close();
+		return count;
 	}
 
 }

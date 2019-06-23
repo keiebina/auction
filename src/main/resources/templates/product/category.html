@@ -8,7 +8,14 @@
 		<div th:fragment="category_contents">
 			<div class="col-md-10 col-lg-10 main">
 				<!-- 見出しt -->
-				<h3>[[${category}]]</h3>
+				<h3>
+					[[${category}]]&nbsp;&nbsp;
+					(全 [[${count}]]商品)
+					<!-- ページネーション -->
+					<span  th:each="page : ${pages}" >
+						<a	 th:text="${page} + '&nbsp;'" th:href="@{'/category'(id = ${id}, page = ${page})}" style="float:right;"></a>
+					</span>
+				</h3>
 				<div class="row">
 					<div th:if="${productsSizeFlag} == true" class="col-lg-4" th:each="product : ${products}" >
 						<div  class="thumbnail" >

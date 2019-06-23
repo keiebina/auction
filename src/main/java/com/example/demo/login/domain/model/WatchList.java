@@ -24,7 +24,12 @@ import javax.persistence.Table;
 	@NamedQuery(
 			name = "getWatchListByUserId",
 			query = "SELECT wl FROM WatchList wl WHERE wl.user.id = :userId"
+			),
+	@NamedQuery(
+			name = "countAllWatchListByUserId",
+			query = "SELECT count(wl) FROM WatchList wl WHERE wl.user.id = :userId"
 			)
+	
 	
 	
 })

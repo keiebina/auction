@@ -18,6 +18,7 @@
 </head>
 <body>
 	<!-- ===== ヘッダー（ナビゲーションバー） =====  -->
+	<div th:fragment="layout">
 	<nav class="navbar navbar-inverse fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -56,6 +57,7 @@
 						th:if="! ${#authentication.name.equals('anonymousUser')}" class="btn btn-link col-lg-2" th:href="@{/successfulBid}">落札済みリスト</a>
 				</div>
 			</div>
+	</div>
 
 	<!-- ===== サイドバー ===== -->
 	<div class="container-fluid">

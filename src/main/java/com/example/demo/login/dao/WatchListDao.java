@@ -9,5 +9,6 @@ public interface WatchListDao<T> extends Serializable {
 
 	public boolean checkWatchList(String userId, Integer productId);
 	public Integer getWatchListIdByUserIdAndProductId(String userId, Integer productId);
-	public List<WatchList> getWatchListByUserId(String userId);
+	public List<WatchList> getWatchListByUserId(String userId, int page);
+	public long countAllWatchListByUserId(String userId);
 }

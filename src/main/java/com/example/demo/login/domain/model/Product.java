@@ -40,6 +40,10 @@ import org.springframework.web.multipart.MultipartFile;
 			query = "SELECT p FROM Product p WHERE p.statusFlag = 1 AND p.category = :category"
 			),
 	@NamedQuery(
+			name = "countProductsByCategory",
+			query = "SELECT count(p) FROM Product p WHERE p.statusFlag = 1 AND p.category = :category"
+			),
+	@NamedQuery(
 			name = "findProductsBySearchWord",
 			query = "SELECT p FROM Product p WHERE p.statusFlag = 1 AND p.productName like :searchWord OR p.category like :searchWord OR p.description like :searchWord"
 			)

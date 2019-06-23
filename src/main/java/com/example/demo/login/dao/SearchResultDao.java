@@ -7,5 +7,7 @@ import com.example.demo.login.domain.model.Product;
 
 public interface SearchResultDao<T> extends Serializable{
 
-	public List<Product> getAllSearchResult();
+	public List<Product> getAllSearchResult(int page);
+	
+	public long countAllSearchResult();
 }

@@ -32,7 +32,7 @@ public class SuccessfulBidController {
 	PaginationService paginationService;
 
 	@RequestMapping(value = "/successfulBid", method = RequestMethod.GET)
-	public ModelAndView getSuccessfulBid(@RequestParam("page") int page, ModelAndView mav, Principal principal) {
+	public ModelAndView getSuccessfulBid(@RequestParam(name = "page", defaultValue = "1") int page, ModelAndView mav, Principal principal) {
 		String userId = principal.getName();
 		List<Product> productList = daService.getProductsByUserId(userId, page);
 		boolean successfulBidFlag = false;
@@ -41,8 +41,7 @@ public class SuccessfulBidController {
 		}
 		long count = daService.countProductsByUserId(userId);
 		List<Integer> pages = paginationService.pagination(count);
-		System.out.println(pages);
-		mav.addObject("pages", pages);
+		mav.addObject("pages", pages);															//ページネーション
 		mav.addObject("count", count);														//全落札数を格納
 		mav.addObject("successfulBidFlag", successfulBidFlag);						//落札した商品があるか判断
 		mav.addObject("productList", productList);										//ログインユーザーが落札した商品一覧を格納

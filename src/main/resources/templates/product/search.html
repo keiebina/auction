@@ -8,7 +8,14 @@
 		<div th:fragment="search_contents">
 			<div class="col-md-10 col-lg-10 main">
 				<!-- 見出しt -->
-				<h3>[[${searchWord}]]&nbsp;の検索結果</h3>
+				<h3>
+					[[${searchWord}]]&nbsp;の検索結果&nbsp;&nbsp;
+					(全 [[${count}]]商品)
+					<!-- ページネーション -->
+					<span  th:each="page : ${pages}" >
+						<a	 th:text="${page} + '&nbsp;'" th:href="@{'/search'(search = ${searchWord}, page = ${page})}" style="float:right;"></a>
+					</span>
+				</h3>
 				<div class="row">
 					<div th:if="${searchResultFlag} == true" class="col-lg-4" th:each="product : ${products}" >
 						<div  class="thumbnail" >

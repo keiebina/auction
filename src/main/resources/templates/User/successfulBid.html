@@ -12,9 +12,8 @@
 					落札済み商品一覧&nbsp;&nbsp;
 					(全 [[${count}]]商品)
 					<!-- ページネーション -->
-					<span  th:each="page : ${pages}" th:value="*{page}">
+					<span  th:each="page : ${pages}" >
 						<a	 th:text="${page} + '&nbsp;'" th:href="@{'/successfulBid'(page = ${page})}" style="float:right;"></a>
-						
 					</span>
 				</h3>
 				<div class="row">

@@ -57,18 +57,20 @@ public class ProductDaoImpl implements ProductDao<Product>{
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> getProductsByCategory(String category)throws DataAccessException {
+	public List<Product> getProductsByCategory(String category, int page)throws DataAccessException {
 		em = dataAccessService.setEntitymanager(em);
 		List<Product> list = (List<Product>)em
 					.createNamedQuery("getProductsByCategory")
 					.setParameter("category", category)
+					.setFirstResult(6 * (page -1))
+					.setMaxResults(6)
 					.getResultList();
 		em.close();
 		return list;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> findProductsBySearchWord(String searchWord) {
+	public List<Product> findProductsBySearchWord(String searchWord)throws DataAccessException {
 		em = dataAccessService.setEntitymanager(em);
 		List<Product> list = (List<Product>)em
 					.createNamedQuery("findProductsBySearchWord")
@@ -76,5 +78,15 @@ public class ProductDaoImpl implements ProductDao<Product>{
 					.getResultList();
 		em.close();
 		return list;
+	}
+	@Override
+	public long countProductsByCategory(String category)throws DataAccessException {
+		em = dataAccessService.setEntitymanager(em);
+		long count = (long)em
+					.createNamedQuery("countProductsByCategory")
+					.setParameter("category", category)
+					.getSingleResult();
+		em.close();
+		return count;
 	}
 }

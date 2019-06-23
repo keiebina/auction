@@ -17,53 +17,15 @@
 <title>auction</title>
 </head>
 <body>
-	<!-- ===== ヘッダー（ナビゲーションバー） =====  -->
-	<nav class="navbar navbar-inverse fixed-top">
+	<!-- layoutの挿入 -->
+	<div th:include="layout/layout :: layout">
+	</div>
+		<!-- ===== コンテンツ ===== -->
 		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" th:href="@{/}">オークションシステム</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li><a th:if="! ${#authentication.name.equals('anonymousUser')}" th:href="@{/userShow}">ようこそ、[[${#authentication.name}]]さん</a></li>
-				<li role="presentation" sec:authorize="hasRole('ADMIN')"><a th:href="@{/productNew}">商品登録（管理者のみ）</a></li>
-			</ul>
-			<!-- ログインしていない場合の表示 -->
-			<ul th:if="${#authentication.name.equals('anonymousUser')}" class="nav navbar-nav navbar-right">
-				<li><a th:href="@{/userNew}"><span
-						class="glyphicon glyphicon-user"></span>新規登録</a></li>
-				<li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span>ログイン</a></li>
-			</ul>
-			<!-- ログインしている場合の表示 -->
-			<div th:if="! ${#authentication.name.equals('anonymousUser')}" class="collapse navbar-collapse" id="navbarSupportedContent">
-				<form method="post" th:action="@{/logout}">
-                	<button class="btn btn-link pull-right navbar-brand" type="submit">ログアウト</button>
-            	</form>
+			<div class="row">
+				<!-- コンテンツ部分の挿入 -->
+				<div th:include="__${contents}__"></div>
 			</div>
 		</div>
-	</nav>
-	<!-- 検索フォーム、リンクボタン -->
-	<div class="container-fluid menu">
-				<div class="row">
-					<form class="form-inline" method="get" th:action="@{/search}">
-						<div class="col-lg-5">
-							<input class="form-control " type="search" placeholder="Search"
-								aria-label="Search" style="width:100%" name="search" >
-						</div>
-						<button class="btn btn-outline-success col-lg-1" type="submit">Search</button>
-					</form>
-					<a th:if="! ${#authentication.name.equals('anonymousUser')}" class="btn btn-link col-lg-2" th:href="@{/userShow}">マイページ</a> <a
-						th:if="! ${#authentication.name.equals('anonymousUser')}" class="btn btn-link col-lg-2" th:href="@{'/watchListShow'(page = 1)}">ウォッチリスト</a> <a
-						th:if="! ${#authentication.name.equals('anonymousUser')}" class="btn btn-link col-lg-2" th:href="@{'/successfulBid'(page = 1)}">落札済みリスト</a>
-				</div>
-			</div>
-
-
-			<!-- ===== コンテンツ ===== -->
-			<div class="container-fluid">
-				<div class="row">
-					<!-- コンテンツ部分の挿入 -->
-					<div th:include="__${contents}__"></div>
-				</div>
-			</div>
 </body>
 </html>
